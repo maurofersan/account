@@ -1,30 +1,35 @@
 .account-card {
   position: relative;
-  width: 280px;
+  width: 100%;
+  max-width: 100%;
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
   flex-shrink: 0;
+  /* borde base visible y sombra sutil como en referencia */
+  border: 2px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  min-height: 420px; /* altura uniforme entre cards */
 
   &--selected {
-    border: 2px solid #28a745;
-    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+    border-color: #28a745;
+    box-shadow: 0 6px 16px rgba(40, 167, 69, 0.2);
   }
 
   &__radio {
     position: absolute;
-    top: 16px;
-    left: 16px;
+    top: 14px;
+    left: 14px;
     z-index: 2;
 
     &__circle {
-      width: 20px;
-      height: 20px;
-      border: 2px solid #fff;
+      width: 24px;
+      height: 24px;
+      border: 2px solid #adb5bd; /* anillo gris cuando no está seleccionado */
       border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -36,8 +41,8 @@
       }
 
       &__inner {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         background-color: #fff;
         border-radius: 50%;
       }
@@ -46,35 +51,37 @@
 
   &__image {
     position: relative;
-    height: 120px;
+    height: 180px; /* altura consistente para todos los cards */
     overflow: hidden;
 
     &__background {
       width: 100%;
       height: 100%;
-      background-size: cover;
-      background-position: center;
+      /* los SVG se ven nítidos y centrados sin recortes */
+      background-size: contain;
+      background-position: center 18px; /* similar a maqueta: un poco más arriba */
       background-repeat: no-repeat;
-      filter: blur(2px);
+      filter: none;
     }
 
     &__badge {
       position: absolute;
-      top: 50%;
+      top: 14px;
       left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #007bff;
+      transform: translateX(-50%);
+      background-color: #0d6efd;
       color: #fff;
-      padding: 8px 16px;
-      border-radius: 20px;
+      padding: 6px 14px;
+      border-radius: 22px;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(13, 110, 253, 0.25);
     }
   }
 
   &__content {
-    padding: 20px;
+    padding: 20px 20px 24px 20px;
 
     &__title {
       font-size: 18px;

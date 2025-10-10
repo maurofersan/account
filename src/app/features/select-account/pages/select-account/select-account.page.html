@@ -12,13 +12,15 @@
     ></app-account-title-section>
 
     <div class="select-account-page__accounts">
-      <div class="select-account-page__accounts__container">
-        @for (account of accounts; track account.id) {
-        <app-account-card
-          [account]="account"
-          [isSelected]="selectedAccount?.id === account.id"
-          (selectAccount)="onAccountSelect($event)"
-        ></app-account-card>
+      <div class="select-account-page__accounts__container" #carousel>
+        @for (account of accounts; track account.id; let idx = $index) {
+        <div class="select-account-page__accounts__item" #cardItem>
+          <app-account-card
+            [account]="account"
+            [isSelected]="selectedAccount?.id === account.id"
+            (selectAccount)="onAccountSelect($event, idx)"
+          ></app-account-card>
+        </div>
         }
       </div>
     </div>
