@@ -1,10 +1,24 @@
 import { Routes } from '@angular/router';
 
-import { AccountComponent } from './account/pages/account.component';
-
 export const ACCOUNT_ROUTES: Routes = [
   {
     path: '',
-    component: AccountComponent,
+    redirectTo: 'seleccionar-cuenta',
+    pathMatch: 'full',
+  },
+  {
+    path: 'seleccionar-cuenta',
+    loadComponent: () =>
+      import('./select-account').then((m) => m.SelectAccountPageComponent),
+  },
+  {
+    path: 'resumen-cuenta',
+    loadComponent: () =>
+      import('./account-summary').then((m) => m.AccountSummaryPageComponent),
+  },
+  {
+    path: 'cuenta-activada',
+    loadComponent: () =>
+      import('./account-summary').then((m) => m.AccountSuccessPageComponent),
   },
 ];

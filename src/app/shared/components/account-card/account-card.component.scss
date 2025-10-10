@@ -1,0 +1,116 @@
+.account-card {
+  position: relative;
+  width: 280px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  &--selected {
+    border: 2px solid #28a745;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+  }
+
+  &__radio {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 2;
+
+    &__circle {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+
+      &--selected {
+        background-color: #28a745;
+        border-color: #28a745;
+      }
+
+      &__inner {
+        width: 8px;
+        height: 8px;
+        background-color: #fff;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &__image {
+    position: relative;
+    height: 120px;
+    overflow: hidden;
+
+    &__background {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(2px);
+    }
+
+    &__badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #007bff;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+  }
+
+  &__content {
+    padding: 20px;
+
+    &__title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #dc3545;
+      margin: 0 0 16px 0;
+    }
+
+    &__features {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    &__feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+
+      &__icon {
+        color: #28a745;
+        font-size: 14px;
+        font-weight: bold;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      &__text {
+        font-size: 14px;
+        color: #212529;
+        line-height: 1.4;
+
+        :global(b) {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+<div class="select-account-page">
+  <div class="select-account-page__container">
+    <app-account-navigation
+      [backButtonText]="getText('account.common.backButton')"
+      (backClick)="goBack()"
+    ></app-account-navigation>
+
+    <app-account-title-section
+      [titlePrefix]="getText('account.select-account.title.prefix')"
+      [titleHighlight]="getText('account.select-account.title.highlight')"
+      [subtitle]="getText('account.select-account.subtitle')"
+    ></app-account-title-section>
+
+    <div class="select-account-page__accounts">
+      <div class="select-account-page__accounts__container">
+        @for (account of accounts; track account.id) {
+        <app-account-card
+          [account]="account"
+          [isSelected]="selectedAccount?.id === account.id"
+          (selectAccount)="onAccountSelect($event)"
+        ></app-account-card>
+        }
+      </div>
+    </div>
+
+    <div class="select-account-page__currency">
+      <h3 class="select-account-page__currency__title">
+        {{ getText('account.select-account.currencyQuestion') }}
+      </h3>
+      <app-currency-selector
+        [currencies]="currencies"
+        [selectedCurrency]="selectedCurrency"
+        (currencyChange)="onCurrencySelect($event)"
+      ></app-currency-selector>
+    </div>
+
+    <div class="select-account-page__actions">
+      <std-button
+        appStdButton
+        class="select-account-page__continue-btn"
+        [class.select-account-page__continue-btn--disabled]="!canContinue"
+        [disabled]="!canContinue"
+        (click)="continue()"
+      >
+        {{ getText('account.select-account.continueButton') }}
+      </std-button>
+    </div>
+  </div>
+</div>

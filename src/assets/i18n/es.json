@@ -1,0 +1,81 @@
+{
+  "account": {
+    "select-account": {
+      "title": {
+        "prefix": "Tenemos estas",
+        "highlight": "cuentas para ti"
+      },
+      "subtitle": "Selecciona tu cuenta ideal",
+      "currencyQuestion": "¿En qué moneda quieres abrir tu cuenta?",
+      "continueButton": "Quiero esta cuenta"
+    },
+    "account-summary": {
+      "title": {
+        "prefix": "¡Listo! Revisa y confirma que la",
+        "highlight": "información sea correcta"
+      },
+      "personalData": {
+        "title": "Tus datos personales",
+        "fullName": "Nombre completo",
+        "dni": "DNI",
+        "birthDate": "Fecha de nacimiento",
+        "maritalStatus": "Estado civil",
+        "gender": "Género (según tu DNI)",
+        "selectPlaceholder": "Selecciona"
+      },
+      "address": {
+        "title": "Tu domicilio",
+        "roadType": "Tipo de via",
+        "roadName": "Nombre de la via",
+        "roadNumber": "Nro. / Dpto. / Oficina / Piso / Mz / Lote",
+        "department": "Departamento",
+        "district": "Distrito",
+        "roadTypePlaceholder": "Selecciona el tipo de via",
+        "roadNamePlaceholder": "Ejemplo: Javier Prado Oeste",
+        "roadNumberPlaceholder": "Ejemplo: Mz 2 Lote 4"
+      },
+      "contactData": {
+        "title": "Tus datos de contacto",
+        "mobile": "Celular",
+        "email": "Correo electrónico"
+      },
+      "newAccount": {
+        "title": "Tu nueva cuenta",
+        "type": "Tipo",
+        "currency": "Moneda"
+      },
+      "consent": {
+        "text": "He leído y acepto los términos y condiciones del",
+        "highlight": "Contrato",
+        "suffix": "y",
+        "highlight2": "Cartilla de Información"
+      },
+      "continueButton": "Continuar"
+    },
+    "account-success": {
+      "title": {
+        "prefix": "¡Felicidades,",
+        "highlight": "Carlos Alberto!"
+      },
+      "subtitle": {
+        "prefix": "Tu cuenta ya está activa para",
+        "highlight": "recibir transferencias y ahorrar"
+      },
+      "description": "Una vez que recojas tu tarjeta, podrás realizar operaciones digitales",
+      "findBranch": "Encuentra tu agencia más cercana",
+      "accountDetails": {
+        "title": "Detalle de tu cuenta",
+        "type": "Tipo",
+        "currency": "Moneda",
+        "infoMessage": "En unos minutos, recibirás los datos de tu cuenta en tu correo."
+      }
+    },
+    "common": {
+      "backButton": "Volver",
+      "loading": "Cargando...",
+      "error": "Ha ocurrido un error",
+      "retry": "Intentar de nuevo",
+      "success": "Operación exitosa"
+    }
+  }
+}

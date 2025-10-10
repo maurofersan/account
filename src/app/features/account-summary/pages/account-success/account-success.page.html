@@ -1,0 +1,125 @@
+<div class="account-success-page">
+  <div class="account-success-page__container">
+    <app-account-navigation
+      [backButtonText]="getText('account.common.backButton')"
+      (backClick)="goBack()"
+    ></app-account-navigation>
+
+    <!-- Celebratory Graphic -->
+    <div class="account-success-page__graphic">
+      <div class="account-success-page__graphic__phone">
+        <div class="account-success-page__graphic__phone__screen">
+          <div class="account-success-page__graphic__phone__logo">S</div>
+        </div>
+      </div>
+      <div class="account-success-page__graphic__confetti">
+        <div
+          class="account-success-page__graphic__confetti__ribbon account-success-page__graphic__confetti__ribbon--red"
+        ></div>
+        <div
+          class="account-success-page__graphic__confetti__ribbon account-success-page__graphic__confetti__ribbon--green"
+        ></div>
+        <div
+          class="account-success-page__graphic__confetti__ribbon account-success-page__graphic__confetti__ribbon--blue"
+        ></div>
+        <div
+          class="account-success-page__graphic__confetti__star account-success-page__graphic__confetti__star--yellow"
+        ></div>
+        <div
+          class="account-success-page__graphic__confetti__star account-success-page__graphic__confetti__star--blue"
+        ></div>
+        <div
+          class="account-success-page__graphic__confetti__star account-success-page__graphic__confetti__star--green"
+        ></div>
+        <div
+          class="account-success-page__graphic__confetti__dot account-success-page__graphic__confetti__dot--red"
+        ></div>
+        <div
+          class="account-success-page__graphic__confetti__dot account-success-page__graphic__confetti__dot--blue"
+        ></div>
+      </div>
+      <div class="account-success-page__graphic__background"></div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="account-success-page__message">
+      <h1 class="account-success-page__message__title">
+        <span class="account-success-page__message__title__prefix">
+          {{ getText('account.account-success.title.prefix') }}
+        </span>
+        <span class="account-success-page__message__title__highlight">
+          {{ getText('account.account-success.title.highlight') }}
+        </span>
+      </h1>
+
+      <p class="account-success-page__message__subtitle">
+        <span class="account-success-page__message__subtitle__prefix">
+          {{ getText('account.account-success.subtitle.prefix') }}
+        </span>
+        <span class="account-success-page__message__subtitle__highlight">
+          {{ getText('account.account-success.subtitle.highlight') }}
+        </span>
+      </p>
+
+      <p class="account-success-page__message__description">
+        {{ getText('account.account-success.description') }}
+      </p>
+    </div>
+
+    <!-- Find Branch Link -->
+    <div class="account-success-page__find-branch">
+      <button
+        class="account-success-page__find-branch__button"
+        (click)="findBranch()"
+      >
+        {{ getText('account.account-success.findBranch') }}
+        <span class="account-success-page__find-branch__arrow">></span>
+      </button>
+    </div>
+
+    <!-- Account Details Card -->
+    <div class="account-success-page__account-details">
+      <div class="account-success-page__account-details__card">
+        <h3 class="account-success-page__account-details__title">
+          {{ getText('account.account-success.accountDetails.title') }}
+        </h3>
+
+        <div class="account-success-page__account-details__info">
+          <div class="account-success-page__account-details__row">
+            <span class="account-success-page__account-details__label">
+              {{ getText('account.account-success.accountDetails.type') }}
+            </span>
+            <span class="account-success-page__account-details__value">
+              {{ accountDetails.type }}
+            </span>
+          </div>
+
+          <div class="account-success-page__account-details__row">
+            <span class="account-success-page__account-details__label">
+              {{ getText('account.account-success.accountDetails.currency') }}
+            </span>
+            <span class="account-success-page__account-details__value">
+              {{ accountDetails.currency }}
+            </span>
+          </div>
+        </div>
+
+        <div class="account-success-page__account-details__notification">
+          <div
+            class="account-success-page__account-details__notification__icon"
+          >
+            i
+          </div>
+          <p class="account-success-page__account-details__notification__text">
+            {{ getText('account.account-success.accountDetails.infoMessage') }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <std-toast status="info" class="account-success-page__toast">
+      ¡Tu cuenta ha sido activada exitosamente!
+    </std-toast>
+  </div>
+</div>

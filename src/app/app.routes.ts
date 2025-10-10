@@ -4,7 +4,12 @@ import { ACCOUNT_ROUTES } from './features/account.routes';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'cuenta',
     children: ACCOUNT_ROUTES,
+  },
+  {
+    path: '',
+    redirectTo: 'cuenta',
+    pathMatch: 'full',
   },
 ];

@@ -1,0 +1,237 @@
+<div class="account-summary-page">
+  <div class="account-summary-page__container">
+    <app-account-navigation
+      [backButtonText]="getText('account.common.backButton')"
+      (backClick)="goBack()"
+    ></app-account-navigation>
+
+    <app-account-title-section
+      [titlePrefix]="getText('account.account-summary.title.prefix')"
+      [titleHighlight]="getText('account.account-summary.title.highlight')"
+    ></app-account-title-section>
+
+    <div class="account-summary-page__sections">
+      <!-- Personal Data Section -->
+      <div class="account-summary-page__section">
+        <div class="account-summary-page__section__header">
+          <h3 class="account-summary-page__section__title">
+            {{ getText('account.account-summary.personalData.title') }}
+          </h3>
+          <div class="account-summary-page__section__info">i</div>
+        </div>
+
+        <div class="account-summary-page__section__fields">
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.personalData.fullName') }}
+            </label>
+            <div class="account-summary-page__field__value">
+              {{ personalData.fullName }}
+            </div>
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.personalData.dni') }}
+            </label>
+            <div class="account-summary-page__field__value">
+              {{ personalData.dni }}
+            </div>
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.personalData.birthDate') }}
+            </label>
+            <div class="account-summary-page__field__value">
+              {{ personalData.birthDate }}
+            </div>
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.personalData.maritalStatus')
+              }}
+            </label>
+            <select class="account-summary-page__field__select">
+              <option value="">
+                {{
+                getText('account.account-summary.personalData.selectPlaceholder')
+                }}
+              </option>
+            </select>
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.personalData.gender') }}
+            </label>
+            <select class="account-summary-page__field__select">
+              <option value="">
+                {{
+                getText('account.account-summary.personalData.selectPlaceholder')
+                }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Section -->
+      <div class="account-summary-page__section">
+        <h3 class="account-summary-page__section__title">
+          {{ getText('account.account-summary.address.title') }}
+        </h3>
+
+        <div class="account-summary-page__section__fields">
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.address.roadType') }}
+            </label>
+            <select class="account-summary-page__field__select">
+              <option value="">
+                {{
+                getText('account.account-summary.address.roadTypePlaceholder')
+                }}
+              </option>
+            </select>
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.address.roadName') }}
+            </label>
+            <input
+              type="text"
+              class="account-summary-page__field__input"
+              [placeholder]="getText('account.account-summary.address.roadNamePlaceholder')"
+            />
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.address.roadNumber') }}
+            </label>
+            <input
+              type="text"
+              class="account-summary-page__field__input"
+              [placeholder]="getText('account.account-summary.address.roadNumberPlaceholder')"
+            />
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.address.department') }}
+            </label>
+            <select class="account-summary-page__field__select">
+              <option value="Lima" selected>Lima</option>
+            </select>
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.address.district') }}
+            </label>
+            <input type="text" class="account-summary-page__field__input" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Data Section -->
+      <div class="account-summary-page__section">
+        <h3 class="account-summary-page__section__title">
+          {{ getText('account.account-summary.contactData.title') }}
+        </h3>
+
+        <div class="account-summary-page__section__fields">
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.contactData.mobile') }}
+            </label>
+            <div class="account-summary-page__field__value">
+              {{ contactData.mobile }}
+            </div>
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.contactData.email') }}
+            </label>
+            <div class="account-summary-page__field__value">
+              {{ contactData.email }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Account Section -->
+      <div class="account-summary-page__section">
+        <h3 class="account-summary-page__section__title">
+          {{ getText('account.account-summary.newAccount.title') }}
+        </h3>
+
+        <div class="account-summary-page__section__fields">
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.newAccount.type') }}
+            </label>
+            <div class="account-summary-page__field__value">
+              {{ newAccountData.type }}
+            </div>
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              {{ getText('account.account-summary.newAccount.currency') }}
+            </label>
+            <div class="account-summary-page__field__value">
+              {{ newAccountData.currency }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consent Section -->
+    <div class="account-summary-page__consent">
+      <label class="account-summary-page__consent__label">
+        <input
+          type="checkbox"
+          class="account-summary-page__consent__checkbox"
+          [checked]="consentAccepted"
+          (change)="onConsentChange($event)"
+        />
+        <span class="account-summary-page__consent__text">
+          {{ getText('account.account-summary.consent.text') }}
+          <span class="account-summary-page__consent__text__highlight"
+            >{{ getText('account.account-summary.consent.highlight') }}</span
+          >
+          {{ getText('account.account-summary.consent.suffix') }}
+          <span class="account-summary-page__consent__text__highlight"
+            >{{ getText('account.account-summary.consent.highlight2') }}</span
+          >
+        </span>
+      </label>
+    </div>
+
+    <!-- Actions -->
+    <div class="account-summary-page__actions">
+      <std-button
+        appStdButton
+        class="account-summary-page__continue-btn"
+        [class.account-summary-page__continue-btn--disabled]="!canContinue"
+        [disabled]="!canContinue"
+        (click)="continue()"
+      >
+        {{ getText('account.account-summary.continueButton') }}
+      </std-button>
+    </div>
+
+    <!-- Toast Notification -->
+    @if (!consentAccepted) {
+    <std-toast status="info" class="account-summary-page__toast">
+      Por favor, acepta los términos y condiciones para continuar.
+    </std-toast>
+    }
+  </div>
+</div>

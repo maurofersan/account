@@ -1,0 +1,15 @@
+<div class="currency-selector">
+  <div class="currency-selector__container">
+    @for (currency of currencies; track currency.code) {
+    <div
+      class="currency-selector__option"
+      [class.currency-selector__option--selected]="
+        selectedCurrency?.code === currency.code
+      "
+      (click)="onCurrencySelect(currency)"
+    >
+      {{ currency.name }} ({{ currency.symbol }})
+    </div>
+    }
+  </div>
+</div>

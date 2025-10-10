@@ -1,0 +1,46 @@
+<div
+  class="account-card"
+  [class.account-card--selected]="isSelected"
+  (click)="onSelectAccount()"
+>
+  <div class="account-card__radio">
+    <div
+      class="account-card__radio__circle"
+      [class.account-card__radio__circle--selected]="isSelected"
+    >
+      @if (isSelected) {
+      <div class="account-card__radio__circle__inner"></div>
+      }
+    </div>
+  </div>
+
+  <div class="account-card__image">
+    <div
+      class="account-card__image__background"
+      [style.background-image]="
+        account?.imageUrl ? 'url(' + account!.imageUrl + ')' : 'none'
+      "
+    ></div>
+    @if (account?.badge) {
+    <div class="account-card__image__badge">
+      {{ account!.badge }}
+    </div>
+    }
+  </div>
+
+  <div class="account-card__content">
+    <h3 class="account-card__content__title">{{ account?.name }}</h3>
+
+    <div class="account-card__content__features">
+      @for (feature of account?.features; track feature.id) {
+      <div class="account-card__content__feature">
+        <span class="account-card__content__feature__icon">✓</span>
+        <span
+          class="account-card__content__feature__text"
+          [innerHTML]="feature.text"
+        ></span>
+      </div>
+      }
+    </div>
+  </div>
+</div>

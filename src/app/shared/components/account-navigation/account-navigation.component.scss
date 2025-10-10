@@ -1,0 +1,38 @@
+.account-navigation {
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  margin-bottom: 24px;
+
+  &__back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: #127277;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 0;
+    transition: color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      color: #0f5f63;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &__icon {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    &__text {
+      font-size: 16px;
+    }
+  }
+}

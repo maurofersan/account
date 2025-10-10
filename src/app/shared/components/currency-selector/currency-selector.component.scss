@@ -1,0 +1,32 @@
+.currency-selector {
+  margin: 24px 0;
+
+  &__container {
+    display: flex;
+    gap: 12px;
+  }
+
+  &__option {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background-color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #212529;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: #28a745;
+    }
+
+    &--selected {
+      border-color: #28a745;
+      background-color: #f8fff9;
+      color: #28a745;
+    }
+  }
+}
