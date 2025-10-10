@@ -10,7 +10,7 @@ sharedMappings.register(path.join(__dirname, "tsconfig.json"), [
 
 module.exports = {
   output: {
-    uniqueName: "onboarding",
+    uniqueName: "account",
     publicPath: "auto",
   },
   optimization: {
@@ -27,10 +27,10 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       library: { type: "module" },
-      name: "onboarding",
+      name: "account",
       filename: "remoteEntry.js",
       exposes: {
-        "./Module": "./src/app/features/onboarding-entry.module.ts",
+        "./Module": "./src/app/features/account-entry.module.ts",
       },
       shared: share({
         "@angular/core": {

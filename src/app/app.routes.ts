@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 
-import { ONBOARDING_ROUTES } from './features/onboarding.routes';
+import { ACCOUNT_ROUTES } from './features/account.routes';
 
 export const routes: Routes = [
   {
     path: '',
-    children: ONBOARDING_ROUTES,
+    children: ACCOUNT_ROUTES,
   },
 ];

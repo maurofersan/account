@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-onboarding-entry',
+  selector: 'app-account-entry',
   template: `<router-outlet></router-outlet>`,
 })
-export class OnboardingEntryComponent {}
+export class AccountEntryComponent {}

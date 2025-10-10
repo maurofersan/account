@@ -3,11 +3,11 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
-  selector: 'app-onboarding',
+  selector: 'app-account',
   imports: [RouterOutlet],
   template: `
-    <h1>Onboarding Flow</h1>
+    <h1>Acount Flow</h1>
     <router-outlet></router-outlet>
   `,
 })
-export class OnboardingComponent {}
+export class AccountComponent {}
