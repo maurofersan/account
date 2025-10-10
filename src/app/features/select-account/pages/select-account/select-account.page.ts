@@ -2,6 +2,9 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   OnInit,
+  ViewChildren,
+  QueryList,
+  ElementRef,
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -48,6 +51,9 @@ export class SelectAccountPageComponent
   selectedCurrency: Currency = this.currencies[0];
   isLoading = false;
 
+  @ViewChildren('cardItem') cardItems!: QueryList<ElementRef<HTMLDivElement>>;
+  @ViewChildren('carousel') carouselList!: QueryList<ElementRef<HTMLDivElement>>;
+
   private textService = inject(TextService);
   private accountStore = inject(AccountStoreService);
   private accountApi = inject(AccountApiService);
@@ -79,7 +85,7 @@ export class SelectAccountPageComponent
         type: 'Cuenta Imparable',
         badge: 'Cuenta Imparable',
         imageUrl:
-          'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop',
+          '/assets/images/image-slider1.svg',
         interestRate: { soles: 4.6, dollars: 2.5 },
         maintenanceCost:
           'Sin costo de mantenimiento, con saldo promedio desde S/500',
@@ -105,7 +111,7 @@ export class SelectAccountPageComponent
         type: 'Cuenta Progresiva',
         badge: 'Cuenta Progresiva',
         imageUrl:
-          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop',
+          '/assets/images/image-slider2.svg',
         interestRate: { soles: 3.2, dollars: 1.8 },
         maintenanceCost: 'Sin costo de mantenimiento',
         minimumBalance: 'S/1000',
@@ -132,9 +138,12 @@ export class SelectAccountPageComponent
   /**
    * Handles account selection
    */
-  onAccountSelect(account: Account): void {
+  onAccountSelect(account: Account, index?: number): void {
     this.selectedAccount = account;
     this.accountStore.setSelectedAccount(account);
+    if (index !== undefined) {
+      this.scrollToCard(index);
+    }
   }
 
   /**
@@ -167,5 +176,19 @@ export class SelectAccountPageComponent
    */
   get canContinue(): boolean {
     return !!this.selectedAccount && !!this.selectedCurrency;
+  }
+
+  private scrollToCard(index: number): void {
+    const items = this.cardItems?.toArray();
+    const carousel = this.carouselList?.first?.nativeElement;
+    if (!items || !items[index] || !carousel) return;
+
+    const itemEl = items[index].nativeElement;
+    const carouselRect = carousel.getBoundingClientRect();
+    const itemRect = itemEl.getBoundingClientRect();
+    const currentScroll = carousel.scrollLeft;
+    const itemCenter = itemRect.left - carouselRect.left + currentScroll + itemRect.width / 2;
+    const targetScroll = Math.max(0, itemCenter - carouselRect.width / 2);
+    carousel.scrollTo({ left: targetScroll, behavior: 'smooth' });
   }
 }

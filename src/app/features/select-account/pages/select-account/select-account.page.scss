@@ -17,15 +17,24 @@
 
     &__container {
       display: flex;
-      gap: 16px;
+      gap: 8px; /* menor separación para que el vecino asome */
       overflow-x: auto;
-      padding: 16px 0;
+      padding: 16px 12px; /* menos padding lateral para que el vecino entre en viewport */
       scrollbar-width: none;
       -ms-overflow-style: none;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 0 30px; /* acompasa el nuevo peek */
 
       &::-webkit-scrollbar {
         display: none;
       }
+    }
+
+    &__item {
+      /* el item ocupa todo el ancho menos el peek para mantener mismo tamaño */
+      flex: 0 0 calc(100% - 60px);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
     }
   }
 
