@@ -8,10 +8,12 @@ import {
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { BaseComponent } from '../../../../shared/base/base.component';
 import { TextService } from '../../../../core/services/text.service';
 import { AccountStoreService } from '../../../../core/services/account-store.service';
 import { AccountApiService } from '../../../../core/services/account-api.service';
+import { MountPathService } from '../../../../core/services/mount-path.service';
 import {
   AccountNavigationComponent,
   AccountTitleSectionComponent,
@@ -50,6 +52,8 @@ export class SelectAccountPageComponent
   selectedAccount: Account | null = null;
   selectedCurrency: Currency = this.currencies[0];
   isLoading = false;
+  imageSlider1Url = '';
+  imageSlider2Url = '';
 
   @ViewChildren('cardItem') cardItems!: QueryList<ElementRef<HTMLDivElement>>;
   @ViewChildren('carousel') carouselList!: QueryList<ElementRef<HTMLDivElement>>;
@@ -58,9 +62,11 @@ export class SelectAccountPageComponent
   private accountStore = inject(AccountStoreService);
   private accountApi = inject(AccountApiService);
   private router = inject(Router);
+  private mountPathService = inject(MountPathService);
 
   ngOnInit(): void {
     this.textService.loadTexts('es').subscribe();
+    this.initializeImageResources();
     this.loadAccounts();
   }
 
@@ -69,6 +75,25 @@ export class SelectAccountPageComponent
    */
   getText(key: string, params?: { [key: string]: string | number }): string {
     return this.textService.getText(key, params);
+  }
+
+  /**
+   * Initializes image resources with microfrontend mount path
+   */
+  private initializeImageResources(): void {
+    this.mountPathService.mountPath$.pipe(take(1)).subscribe({
+      next: (mountPath) => {
+        const basePath = mountPath || '/';
+        this.imageSlider1Url = `${basePath}assets/images/image-slider1.svg`;
+        this.imageSlider2Url = `${basePath}assets/images/image-slider2.svg`;
+      },
+      error: (err) => {
+        console.error('[SelectAccountPage] Error to get mountPath:', err);
+        // Fallback a rutas estáticas
+        this.imageSlider1Url = '/assets/images/image-slider1.svg';
+        this.imageSlider2Url = '/assets/images/image-slider2.svg';
+      },
+    });
   }
 
   /**
@@ -84,8 +109,7 @@ export class SelectAccountPageComponent
         name: 'Ahorra a tu ritmo',
         type: 'Cuenta Imparable',
         badge: 'Cuenta Imparable',
-        imageUrl:
-          '/assets/images/image-slider1.svg',
+        imageUrl: this.imageSlider1Url,
         interestRate: { soles: 4.6, dollars: 2.5 },
         maintenanceCost:
           'Sin costo de mantenimiento, con saldo promedio desde S/500',
@@ -110,8 +134,7 @@ export class SelectAccountPageComponent
         name: 'Para tu crecimiento',
         type: 'Cuenta Progresiva',
         badge: 'Cuenta Progresiva',
-        imageUrl:
-          '/assets/images/image-slider2.svg',
+        imageUrl: this.imageSlider2Url,
         interestRate: { soles: 3.2, dollars: 1.8 },
         maintenanceCost: 'Sin costo de mantenimiento',
         minimumBalance: 'S/1000',
