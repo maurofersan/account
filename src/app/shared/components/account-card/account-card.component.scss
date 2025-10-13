@@ -90,6 +90,8 @@
 
       &__first {
         color: #212529; /* negro/tinta base para la primera palabra */
+        margin-right: 4px; /* asegura espacio entre palabras sin entidades HTML */
+        display: inline-block;
       }
 
       &__rest {
