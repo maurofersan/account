@@ -12,6 +12,7 @@ import { AccountApiService } from '../../../../core/services/account-api.service
 import {
   AccountNavigationComponent,
   AccountTitleSectionComponent,
+  ConsentCheckboxComponent,
 } from '../../../../shared/components';
 import { StdButtonDirective } from '../../../../shared/directives';
 
@@ -21,6 +22,7 @@ import { StdButtonDirective } from '../../../../shared/directives';
   imports: [
     AccountNavigationComponent,
     AccountTitleSectionComponent,
+    ConsentCheckboxComponent,
     StdButtonDirective,
   ],
   templateUrl: './account-summary.page.html',
@@ -78,9 +80,8 @@ export class AccountSummaryPageComponent
   /**
    * Handles consent change
    */
-  onConsentChange(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.consentAccepted = target.checked;
+  onConsentChange(checked: boolean): void {
+    this.consentAccepted = checked;
   }
 
   /**

@@ -193,22 +193,14 @@
     </div>
 
     <!-- Consent Section -->
-    <div class="account-summary-page__consent">
-      <label class="account-summary-page__consent__label">
-        <input
-          type="checkbox"
-          class="account-summary-page__consent__checkbox"
-          [checked]="consentAccepted"
-          (change)="onConsentChange($event)"
-        />
-        <span class="account-summary-page__consent__text">
-          He leído y acepto los términos y condiciones del
-          <span class="account-summary-page__consent__text__highlight">Contrato</span>
-          y
-          <span class="account-summary-page__consent__text__highlight">Cartilla de Información</span>.
-        </span>
-      </label>
-    </div>
+    <app-consent-checkbox
+      [checked]="consentAccepted"
+      [text]="getText('account.account-summary.consent.text')"
+      [highlight1]="getText('account.account-summary.consent.highlight')"
+      [suffix]="getText('account.account-summary.consent.suffix')"
+      [highlight2]="getText('account.account-summary.consent.highlight2')"
+      (change)="onConsentChange($event)"
+    ></app-consent-checkbox>
 
     <!-- Actions -->
     <div class="account-summary-page__actions">
