@@ -1,15 +1,14 @@
 <div class="currency-selector">
   <div class="currency-selector__container">
     @for (currency of currencies; track currency.code) {
-    <div
+    <std-button
       class="currency-selector__option"
       [class.currency-selector__option--selected]="
         selectedCurrency?.code === currency.code
       "
+      [label]="currency.name + ' (' + currency.symbol + ')'"
       (click)="onCurrencySelect(currency)"
-    >
-      {{ currency.name }} ({{ currency.symbol }})
-    </div>
+    ></std-button>
     }
   </div>
 </div>
