@@ -9,7 +9,6 @@ import { BaseComponent } from '../../../../shared/base/base.component';
 import { TextService } from '../../../../core/services/text.service';
 import { AccountStoreService } from '../../../../core/services/account-store.service';
 import { AccountApiService } from '../../../../core/services/account-api.service';
-import { AccountNavigationComponent } from '../../../../shared/components';
 import {
   UserData,
   AccountDetails,
@@ -18,7 +17,7 @@ import {
 @Component({
   selector: 'app-account-success-page',
   standalone: true,
-  imports: [AccountNavigationComponent],
+  imports: [],
   templateUrl: './account-success.page.html',
   styleUrl: './account-success.page.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -60,12 +59,5 @@ export class AccountSuccessPageComponent
   findBranch(): void {
     // Navigate to branch finder or external link
     console.log('Finding nearest branch...');
-  }
-
-  /**
-   * Navigates back to previous page
-   */
-  goBack(): void {
-    this.router.navigate(['/cuenta/resumen-cuenta']);
   }
 }

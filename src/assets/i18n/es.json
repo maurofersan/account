@@ -53,10 +53,7 @@
       "continueButton": "Continuar"
     },
     "account-success": {
-      "title": {
-        "prefix": "¡Felicidades,",
-        "highlight": "Carlos Alberto!"
-      },
+      "title": "¡Felicidades, {name}!",
       "subtitle": {
         "prefix": "Tu cuenta ya está activa para",
         "highlight": "recibir transferencias y ahorrar"
@@ -67,7 +64,10 @@
         "title": "Detalle de tu cuenta",
         "type": "Tipo",
         "currency": "Moneda",
-        "infoMessage": "En unos minutos, recibirás los datos de tu cuenta en tu correo."
+        "infoMessage": {
+          "prefix": "En unos minutos, recibirás los",
+          "highlight": "datos de tu cuenta en tu correo."
+        }
       }
     },
     "common": {

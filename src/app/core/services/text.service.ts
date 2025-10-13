@@ -63,7 +63,7 @@ export class TextService {
   ): string {
     if (!params) return text;
 
-    return text.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+    return text.replace(/\{(\w+)\}/g, (match, key) => {
       return params[key]?.toString() || match;
     });
   }
