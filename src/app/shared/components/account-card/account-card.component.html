@@ -29,7 +29,10 @@
   </div>
 
   <div class="account-card__content">
-    <h3 class="account-card__content__title">{{ account?.name }}</h3>
+    <h3 class="account-card__content__title">
+      <span class="account-card__content__title__first">{{ getFirstWord(account?.name) }}</span>
+      <span class="account-card__content__title__rest">{{ getRestWords(account?.name) }}</span>
+    </h3>
 
     <div class="account-card__content__features">
       @for (feature of account?.features; track feature.id) {

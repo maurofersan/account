@@ -18,4 +18,16 @@ export class AccountCardComponent {
       this.selectAccount.emit(this.account);
     }
   }
+
+  getFirstWord(text?: string | null): string {
+    if (!text) return '';
+    const [first, ...rest] = text.split(' ');
+    return first ?? '';
+  }
+
+  getRestWords(text?: string | null): string {
+    if (!text) return '';
+    const [first, ...rest] = text.split(' ');
+    return rest.join(' ');
+  }
 }

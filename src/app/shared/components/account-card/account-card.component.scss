@@ -86,8 +86,15 @@
     &__title {
       font-size: 18px;
       font-weight: 700;
-      color: #dc3545;
       margin: 0 0 16px 0;
+
+      &__first {
+        color: #212529; /* negro/tinta base para la primera palabra */
+      }
+
+      &__rest {
+        color: #dc3545; /* rojo para el resto */
+      }
     }
 
     &__features {
