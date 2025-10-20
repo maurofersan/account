@@ -98,25 +98,29 @@
           </div>
 
           <div class="account-summary-page__field">
-            <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.address.roadName') }}
-            </label>
-            <input
+            <std-input
               type="text"
-              class="account-summary-page__field__input"
+              [label]="getText('account.account-summary.address.roadName')"
               [placeholder]="getText('account.account-summary.address.roadNamePlaceholder')"
-            />
+              [value]="addressData.roadName"
+              [status]="roadNameError ? 'error' : 'default'"
+              [helperText]="roadNameError ? getText('account.account-summary.address.validation.minLength') : ''"
+              (changeEvent)="onRoadNameChange($event)"
+              (blurEvent)="validateRoadName()"
+            ></std-input>
           </div>
 
           <div class="account-summary-page__field">
-            <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.address.roadNumber') }}
-            </label>
-            <input
+            <std-input
               type="text"
-              class="account-summary-page__field__input"
+              [label]="getText('account.account-summary.address.roadNumber')"
               [placeholder]="getText('account.account-summary.address.roadNumberPlaceholder')"
-            />
+              [value]="addressData.roadNumber"
+              [status]="roadNumberError ? 'error' : 'default'"
+              [helperText]="roadNumberError ? getText('account.account-summary.address.validation.minLength') : ''"
+              (changeEvent)="onRoadNumberChange($event)"
+              (blurEvent)="validateRoadNumber()"
+            ></std-input>
           </div>
 
           <div class="account-summary-page__field">

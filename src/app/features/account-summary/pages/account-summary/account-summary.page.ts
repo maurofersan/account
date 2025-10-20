@@ -5,6 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { BaseComponent } from '../../../../shared/base/base.component';
 import { TextService } from '../../../../core/services/text.service';
 import { AccountStoreService } from '../../../../core/services/account-store.service';
@@ -20,6 +21,7 @@ import { StdButtonDirective } from '../../../../shared/directives';
   selector: 'app-account-summary-page',
   standalone: true,
   imports: [
+    FormsModule,
     AccountNavigationComponent,
     AccountTitleSectionComponent,
     ConsentCheckboxComponent,
@@ -48,6 +50,10 @@ export class AccountSummaryPageComponent
     department: 'Lima',
     district: '',
   };
+
+  // Validation states
+  roadNameError = false;
+  roadNumberError = false;
 
   contactData = {
     mobile: '987 654 321',
@@ -103,9 +109,39 @@ export class AccountSummaryPageComponent
   }
 
   /**
+   * Handles road name change event from std-input
+   */
+  onRoadNameChange(event: any): void {
+    this.addressData.roadName = event.detail;
+    this.validateRoadName();
+  }
+
+  /**
+   * Handles road number change event from std-input
+   */
+  onRoadNumberChange(event: any): void {
+    this.addressData.roadNumber = event.detail;
+    this.validateRoadNumber();
+  }
+
+  /**
+   * Validates road name field
+   */
+  validateRoadName(): void {
+    this.roadNameError = this.addressData.roadName.length < 2;
+  }
+
+  /**
+   * Validates road number field
+   */
+  validateRoadNumber(): void {
+    this.roadNumberError = this.addressData.roadNumber.length < 2;
+  }
+
+  /**
    * Checks if continue button should be enabled
    */
   get canContinue(): boolean {
-    return this.consentAccepted;
+    return this.consentAccepted && !this.roadNameError && !this.roadNumberError;
   }
 }

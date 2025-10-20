@@ -32,7 +32,10 @@
         "district": "Distrito",
         "roadTypePlaceholder": "Selecciona el tipo de via",
         "roadNamePlaceholder": "Ejemplo: Javier Prado Oeste",
-        "roadNumberPlaceholder": "Ejemplo: Mz 2 Lote 4"
+        "roadNumberPlaceholder": "Ejemplo: Mz 2 Lote 4",
+        "validation": {
+          "minLength": "Ingresa al menos 2 caracteres"
+        }
       },
       "contactData": {
         "title": "Tus datos de contacto",
