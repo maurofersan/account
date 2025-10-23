@@ -111,11 +111,16 @@
       gap: 8px;
 
       &__icon {
-        color: #28a745;
-        font-size: 14px;
+        color: #dc3545;
+        font-size: 16px;
         font-weight: bold;
         flex-shrink: 0;
         margin-top: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
       }
 
       &__text {

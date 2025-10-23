@@ -2,9 +2,6 @@ import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   OnInit,
-  ViewChildren,
-  QueryList,
-  ElementRef,
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -55,8 +52,6 @@ export class SelectAccountPageComponent
   imageSlider1Url = '';
   imageSlider2Url = '';
 
-  @ViewChildren('cardItem') cardItems!: QueryList<ElementRef<HTMLDivElement>>;
-  @ViewChildren('carousel') carouselList!: QueryList<ElementRef<HTMLDivElement>>;
 
   private textService = inject(TextService);
   private accountStore = inject(AccountStoreService);
@@ -106,50 +101,45 @@ export class SelectAccountPageComponent
     this.accounts = [
       {
         id: '1',
-        name: 'Ahorra a tu ritmo',
-        type: 'Cuenta Imparable',
-        badge: 'Cuenta Imparable',
+        name: this.getAccountText('imparable', 'name'),
+        type: this.getAccountText('imparable', 'type'),
+        badge: this.getAccountText('imparable', 'badge'),
         imageUrl: this.imageSlider1Url,
         interestRate: { soles: 4.6, dollars: 2.5 },
-        maintenanceCost:
-          'Sin costo de mantenimiento, con saldo promedio desde S/500',
+        maintenanceCost: this.getAccountText('imparable', 'features.maintenance'),
         minimumBalance: 'S/500',
         features: [
           {
             id: '1',
-            text: 'Gana intereses: <b>4.6%</b> desde S/500 y <b>2.5%</b> en dólares',
+            text: this.getAccountText('imparable', 'features.interest'),
           },
           {
             id: '2',
-            text: 'Dispón de tu dinero cuando lo necesites.',
+            text: this.getAccountText('imparable', 'features.dispose'),
           },
           {
             id: '3',
-            text: 'Sin costo de mantenimiento, con saldo promedio desde S/500',
+            text: this.getAccountText('imparable', 'features.maintenance'),
           },
         ],
       },
       {
         id: '2',
-        name: 'Para tu crecimiento',
-        type: 'Cuenta Progresiva',
-        badge: 'Cuenta Progresiva',
+        name: this.getAccountText('libre', 'name'),
+        type: this.getAccountText('libre', 'type'),
+        badge: this.getAccountText('libre', 'badge'),
         imageUrl: this.imageSlider2Url,
-        interestRate: { soles: 3.2, dollars: 1.8 },
-        maintenanceCost: 'Sin costo de mantenimiento',
-        minimumBalance: 'S/1000',
+        interestRate: { soles: 0, dollars: 0 },
+        maintenanceCost: 'S/0',
+        minimumBalance: 'S/0',
         features: [
           {
             id: '1',
-            text: 'Opera sin costo',
+            text: this.getAccountText('libre', 'features.minimum'),
           },
           {
             id: '2',
-            text: 'Sin costo de mantenimiento',
-          },
-          {
-            id: '3',
-            text: 'Sin movimientos limitados',
+            text: this.getAccountText('libre', 'features.operations'),
           },
         ],
       },
@@ -159,14 +149,51 @@ export class SelectAccountPageComponent
   }
 
   /**
+   * Gets account text with fallback
+   */
+  private getAccountText(accountType: string, key: string): string {
+    const fullKey = `account.select-account.accounts.${accountType}.${key}`;
+    const text = this.getText(fullKey);
+    
+    // Fallback to static values if i18n is not loaded
+    if (text === fullKey) {
+      return this.getStaticAccountText(accountType, key);
+    }
+    
+    return text;
+  }
+
+  /**
+   * Gets static account text as fallback
+   */
+  private getStaticAccountText(accountType: string, key: string): string {
+    const staticTexts: { [key: string]: { [key: string]: string } } = {
+      imparable: {
+        name: 'Ahorra a tu ritmo',
+        type: 'Cuenta Imparable',
+        badge: 'Cuenta Imparable',
+        'features.interest': 'Gana intereses: <b>4.6%</b> desde S/500 y <b>2.5%</b> en dólares',
+        'features.dispose': 'Dispón de tu dinero cuando lo necesites.',
+        'features.maintenance': 'Sin costo de mantenimiento, con saldo promedio desde S/500'
+      },
+      libre: {
+        name: 'Para tu día a día',
+        type: 'Cuenta Libre',
+        badge: 'Cuenta Libre',
+        'features.minimum': 'Sin monto mínimo de apertura',
+        'features.operations': 'Operaciones ilimitadas sin costo en agencias, App y cajero'
+      }
+    };
+
+    return staticTexts[accountType]?.[key] || key;
+  }
+
+  /**
    * Handles account selection
    */
-  onAccountSelect(account: Account, index?: number): void {
+  onAccountSelect(account: Account): void {
     this.selectedAccount = account;
     this.accountStore.setSelectedAccount(account);
-    if (index !== undefined) {
-      this.scrollToCard(index);
-    }
   }
 
   /**
@@ -201,17 +228,4 @@ export class SelectAccountPageComponent
     return !!this.selectedAccount && !!this.selectedCurrency;
   }
 
-  private scrollToCard(index: number): void {
-    const items = this.cardItems?.toArray();
-    const carousel = this.carouselList?.first?.nativeElement;
-    if (!items || !items[index] || !carousel) return;
-
-    const itemEl = items[index].nativeElement;
-    const carouselRect = carousel.getBoundingClientRect();
-    const itemRect = itemEl.getBoundingClientRect();
-    const currentScroll = carousel.scrollLeft;
-    const itemCenter = itemRect.left - carouselRect.left + currentScroll + itemRect.width / 2;
-    const targetScroll = Math.max(0, itemCenter - carouselRect.width / 2);
-    carousel.scrollTo({ left: targetScroll, behavior: 'smooth' });
-  }
 }

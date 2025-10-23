@@ -2,12 +2,33 @@
   "account": {
     "select-account": {
       "title": {
-        "prefix": "Tenemos estasx",
+        "prefix": "Tenemos estas",
         "highlight": "cuentas para ti"
       },
       "subtitle": "Selecciona tu cuenta ideal",
       "currencyQuestion": "¿En qué moneda quieres abrir tu cuenta?",
-      "continueButton": "Quiero esta cuenta"
+      "continueButton": "Quiero esta cuenta",
+      "accounts": {
+        "imparable": {
+          "name": "Ahorra a tu ritmo",
+          "type": "Cuenta Imparable",
+          "badge": "Cuenta Imparable",
+          "features": {
+            "interest": "Gana intereses: <b>4.6%</b> desde S/500 y <b>2.5%</b> en dólares",
+            "dispose": "Dispón de tu dinero cuando lo necesites.",
+            "maintenance": "Sin costo de mantenimiento, con saldo promedio desde S/500"
+          }
+        },
+        "libre": {
+          "name": "Para tu día a día",
+          "type": "Cuenta Libre",
+          "badge": "Cuenta Libre",
+          "features": {
+            "minimum": "Sin monto mínimo de apertura",
+            "operations": "Operaciones ilimitadas sin costo en agencias, App y cajero"
+          }
+        }
+      }
     },
     "account-summary": {
       "title": {

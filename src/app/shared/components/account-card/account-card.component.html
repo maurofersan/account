@@ -36,7 +36,7 @@
     <div class="account-card__content__features">
       @for (feature of account?.features; track feature.id) {
       <div class="account-card__content__feature">
-        <span class="account-card__content__feature__icon">✓</span>
+        <span class="account-card__content__feature__icon" [innerHTML]="getFeatureIcon(feature.text)"></span>
         <span
           class="account-card__content__feature__text"
           [innerHTML]="feature.text"

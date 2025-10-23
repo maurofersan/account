@@ -30,4 +30,25 @@ export class AccountCardComponent {
     const [first, ...rest] = text.split(' ');
     return rest.join(' ');
   }
+
+  getFeatureIcon(featureText: string): string {
+    // Iconos específicos según el contenido del texto
+    if (featureText.includes('Dispón de tu dinero')) {
+      return '💰'; // Icono de dinero y mano
+    }
+    if (featureText.includes('costo de mantenimiento')) {
+      return '💳'; // Icono de tarjeta/cartera
+    }
+    if (featureText.includes('monto mínimo')) {
+      return '❤️'; // Icono de corazón
+    }
+    if (featureText.includes('Operaciones ilimitadas')) {
+      return '📱'; // Icono de smartphone
+    }
+    if (featureText.includes('Gana intereses')) {
+      return '📈'; // Icono de gráfico de crecimiento
+    }
+    // Icono por defecto
+    return '✓';
+  }
 }
