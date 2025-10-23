@@ -51,4 +51,30 @@ export class AccountCardComponent {
     // Icono por defecto
     return '✓';
   }
+
+  getInfoBoxClass(): string {
+    if (!this.account) return '';
+    
+    // Clase basada en el tipo de cuenta
+    if (this.account.type === 'Cuenta Imparable') {
+      return 'account-card__image__info-box--teal';
+    } else if (this.account.type === 'Cuenta Libre') {
+      return 'account-card__image__info-box--yellow';
+    }
+    
+    return '';
+  }
+
+  getInfoBoxContent(): string {
+    if (!this.account) return '';
+    
+    // Contenido basado en el tipo de cuenta
+    if (this.account.type === 'Cuenta Imparable') {
+      return 'Gana\n4.6% en soles\nDesde S/500\n2.5% en dólares';
+    } else if (this.account.type === 'Cuenta Libre') {
+      return 'S/0\nCosto de\nmantenimiento';
+    }
+    
+    return '';
+  }
 }

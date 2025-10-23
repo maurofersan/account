@@ -21,6 +21,14 @@
         account?.imageUrl ? 'url(' + account!.imageUrl + ')' : 'none'
       "
     ></div>
+    
+    <!-- Recuadro informativo -->
+    <div class="account-card__image__info-box" [class]="getInfoBoxClass()">
+      <div class="account-card__image__info-box__content">
+        {{ getInfoBoxContent() }}
+      </div>
+    </div>
+    
     @if (account?.badge) {
     <div class="account-card__image__badge">
       {{ account!.badge }}
