@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Account } from '../../interfaces/account.interfaces';
+import { PrefixAssetPipe } from '../../pipes/prefix-asset.pipe';
 
 @Component({
   selector: 'app-account-card',
   standalone: true,
-  imports: [],
+  imports: [PrefixAssetPipe],
   templateUrl: './account-card.component.html',
   styleUrl: './account-card.component.scss',
 })
@@ -31,26 +32,6 @@ export class AccountCardComponent {
     return rest.join(' ');
   }
 
-  getFeatureIcon(featureText: string): string {
-    // Iconos específicos según el contenido del texto
-    if (featureText.includes('Dispón de tu dinero')) {
-      return '💰'; // Icono de dinero y mano
-    }
-    if (featureText.includes('costo de mantenimiento')) {
-      return '💳'; // Icono de tarjeta/cartera
-    }
-    if (featureText.includes('monto mínimo')) {
-      return '❤️'; // Icono de corazón
-    }
-    if (featureText.includes('Operaciones ilimitadas')) {
-      return '📱'; // Icono de smartphone
-    }
-    if (featureText.includes('Gana intereses')) {
-      return '📈'; // Icono de gráfico de crecimiento
-    }
-    // Icono por defecto
-    return '✓';
-  }
 
   getInfoBoxClass(): string {
     if (!this.account) return '';

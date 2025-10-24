@@ -29,6 +29,13 @@
       </div>
     </div>
     
+    <!-- Texto del tipo de cuenta en la parte inferior de la imagen -->
+    @if (account?.type) {
+    <div class="account-card__image__type-label">
+      {{ account!.type }}
+    </div>
+    }
+    
     @if (account?.badge) {
     <div class="account-card__image__badge">
       {{ account!.badge }}
@@ -42,14 +49,54 @@
     </h3>
 
     <div class="account-card__content__features">
-      @for (feature of account?.features; track feature.id) {
-      <div class="account-card__content__feature">
-        <span class="account-card__content__feature__icon" [innerHTML]="getFeatureIcon(feature.text)"></span>
-        <span
-          class="account-card__content__feature__text"
-          [innerHTML]="feature.text"
-        ></span>
-      </div>
+      @if (account?.type === 'Cuenta Imparable') {
+        <!-- Características para Cuenta Imparable -->
+        <div class="account-card__content__feature">
+          <img 
+            [src]="'assets/images/AC040-debt.svg' | prefixAsset" 
+            alt="Dinero disponible" 
+            class="account-card__content__feature__icon"
+          />
+          <span class="account-card__content__feature__text">
+            Dispón de tu dinero cuando lo necesites.
+          </span>
+        </div>
+        
+        <div class="account-card__content__feature">
+          <img 
+            [src]="'assets/images/CB021-credit.svg' | prefixAsset" 
+            alt="Sin costo" 
+            class="account-card__content__feature__icon"
+          />
+          <span class="account-card__content__feature__text">
+            Sin costo de mantenimiento, con saldo promedio desde S/500
+          </span>
+        </div>
+      }
+      
+      @if (account?.type === 'Cuenta Libre') {
+        <!-- Características para Cuenta Libre -->
+        <div class="account-card__content__feature">
+          <img 
+            [src]="'assets/images/Vector.svg' | prefixAsset" 
+            alt="Sin monto mínimo" 
+            class="account-card__content__feature__icon"
+          />
+          <span class="account-card__content__feature__text">
+            Sin monto mínimo de apertura
+          </span>
+        </div>
+        
+        <div class="account-card__content__feature">
+          <img 
+            [src]="'assets/images/Vector2.svg' | prefixAsset" 
+            alt="Operaciones ilimitadas" 
+            class="account-card__content__feature__icon"
+          />
+          <span class="account-card__content__feature__text">
+            Operaciones ilimitadas sin costo en agencias, App y cajero
+          </span>
+        </div>
       }
     </div>
   </div>
