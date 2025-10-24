@@ -54,28 +54,27 @@
           <img 
             [src]="'assets/images/Pastilla.CtaLibre.svg' | prefixAsset" 
             alt="TE RINDE TREA" 
-            class="select-account-page__info-badge__icon"
+            class="select-account-page__info-badge__image"
             (error)="onImageError($event)"
           />
-          <span class="select-account-page__info-badge__text">TE RINDE TREA</span>
         </div>
         
         <div class="select-account-page__info-badge select-account-page__info-badge--percentage">
-          <span class="select-account-page__info-badge__label">TREA</span>
-          <span class="select-account-page__info-badge__value">0.00%</span>
+          <img 
+            [src]="'assets/images/Pastilla.CtaLibre.svg' | prefixAsset" 
+            alt="TREA 0.00%" 
+            class="select-account-page__info-badge__image"
+            (error)="onImageError($event)"
+          />
         </div>
         
         <div class="select-account-page__info-badge select-account-page__info-badge--compromiso">
           <img 
             [src]="'assets/images/SelloCompromiso.svg' | prefixAsset" 
             alt="COMPROMISO" 
-            class="select-account-page__info-badge__icon"
+            class="select-account-page__info-badge__image"
             (error)="onImageError($event)"
           />
-          <div class="select-account-page__info-badge__content">
-            <span class="select-account-page__info-badge__text">COMPROMISO</span>
-            <span class="select-account-page__info-badge__subtext">Hablemos más simple</span>
-          </div>
         </div>
       </div>
 
