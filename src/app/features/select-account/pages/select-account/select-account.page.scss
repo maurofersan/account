@@ -63,4 +63,106 @@
       opacity: 0.6;
     }
   }
+
+  &__additional-info {
+    margin-top: 24px;
+  }
+
+  &__info-badges {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__info-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 16px;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    min-height: 48px;
+
+    &--trea {
+      background-color: #343a40;
+      color: #fff;
+      border: 2px solid #fff;
+      flex: 1;
+      max-width: 120px;
+    }
+
+    &--percentage {
+      background-color: #fff;
+      color: #000;
+      border: 2px solid #000;
+      flex-direction: column;
+      text-align: center;
+      min-width: 80px;
+    }
+
+    &--compromiso {
+      background-color: #343a40;
+      color: #fff;
+      border: 2px solid #fff;
+      flex: 1;
+      max-width: 140px;
+    }
+
+    &__icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+      display: block;
+      filter: brightness(0) invert(1); // Para hacer las imágenes blancas en fondos oscuros
+    }
+
+    &--trea &__icon,
+    &--compromiso &__icon {
+      filter: brightness(0) invert(1); // Imágenes blancas en fondos oscuros
+    }
+
+    &__text {
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    &__label {
+      font-size: 10px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    &__value {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    &__subtext {
+      font-size: 10px;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+  }
+
+  &__legal-info {
+    margin-top: 16px;
+  }
+
+  &__legal-text {
+    font-size: 10px;
+    color: #6c757d;
+    line-height: 1.4;
+    margin: 0;
+    text-align: left;
+  }
 }

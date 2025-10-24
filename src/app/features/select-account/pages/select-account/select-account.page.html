@@ -45,5 +45,46 @@
         {{ getText('account.select-account.continueButton') }}
       </std-button>
     </div>
+
+    <!-- Sección de información adicional -->
+    <div class="select-account-page__additional-info">
+      <!-- Pastillas informativas -->
+      <div class="select-account-page__info-badges">
+        <div class="select-account-page__info-badge select-account-page__info-badge--trea">
+          <img 
+            [src]="'assets/images/Pastilla.CtaLibre.svg' | prefixAsset" 
+            alt="TE RINDE TREA" 
+            class="select-account-page__info-badge__icon"
+            (error)="onImageError($event)"
+          />
+          <span class="select-account-page__info-badge__text">TE RINDE TREA</span>
+        </div>
+        
+        <div class="select-account-page__info-badge select-account-page__info-badge--percentage">
+          <span class="select-account-page__info-badge__label">TREA</span>
+          <span class="select-account-page__info-badge__value">0.00%</span>
+        </div>
+        
+        <div class="select-account-page__info-badge select-account-page__info-badge--compromiso">
+          <img 
+            [src]="'assets/images/SelloCompromiso.svg' | prefixAsset" 
+            alt="COMPROMISO" 
+            class="select-account-page__info-badge__icon"
+            (error)="onImageError($event)"
+          />
+          <div class="select-account-page__info-badge__content">
+            <span class="select-account-page__info-badge__text">COMPROMISO</span>
+            <span class="select-account-page__info-badge__subtext">Hablemos más simple</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información legal y financiera -->
+      <div class="select-account-page__legal-info">
+        <p class="select-account-page__legal-text">
+          {{ getText('account.select-account.legalInfo') }}
+        </p>
+      </div>
+    </div>
   </div>
 </div>

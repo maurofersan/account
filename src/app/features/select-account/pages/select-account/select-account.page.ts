@@ -18,6 +18,7 @@ import {
   CurrencySelectorComponent,
 } from '../../../../shared/components';
 import { StdButtonDirective } from '../../../../shared/directives';
+import { PrefixAssetPipe } from '../../../../shared/pipes/prefix-asset.pipe';
 import {
   Account,
   Currency,
@@ -32,6 +33,7 @@ import {
     AccountCardComponent,
     CurrencySelectorComponent,
     StdButtonDirective,
+    PrefixAssetPipe,
   ],
   templateUrl: './select-account.page.html',
   styleUrl: './select-account.page.scss',
@@ -226,6 +228,16 @@ export class SelectAccountPageComponent
    */
   get canContinue(): boolean {
     return !!this.selectedAccount && !!this.selectedCurrency;
+  }
+
+  /**
+   * Handles image loading errors
+   */
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    if (target) {
+      target.style.display = 'none';
+    }
   }
 
 }
