@@ -70,10 +70,10 @@
 
   &__info-badges {
     display: flex;
-    gap: 12px;
+    gap: 16px;
     margin-bottom: 16px;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 
   &__info-badge {
@@ -83,27 +83,33 @@
     border-radius: 16px;
     padding: 8px;
     min-height: 60px;
-    flex: 1;
-    max-width: 120px;
+    background-color: transparent;
 
     &--trea {
-      background-color: transparent;
-    }
-
-    &--percentage {
-      background-color: transparent;
+      flex: 2;
+      max-width: 200px;
+      min-height: 80px;
     }
 
     &--compromiso {
-      background-color: transparent;
+      flex: 1;
+      max-width: 120px;
+      min-height: 60px;
     }
 
     &__image {
       width: 100%;
       height: auto;
-      max-height: 60px;
       object-fit: contain;
       display: block;
+    }
+
+    &--trea &__image {
+      max-height: 80px;
+    }
+
+    &--compromiso &__image {
+      max-height: 60px;
     }
 
     &__text {
