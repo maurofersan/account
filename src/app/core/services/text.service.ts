@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+// import { MountPathService } from '@ng-darwin-wmf/microfront';
+// import { ConfigService } from '@ng-darwin/config';
 
 export interface Texts {
   [key: string]: any;
@@ -11,29 +13,36 @@ export interface Texts {
   providedIn: 'root',
 })
 export class TextService {
-  private texts: Texts = {};
-  private currentLanguage = 'es';
+  private _texts: Texts = {};
+  private _currentLanguage = 'es';
+  // private _configService = inject(ConfigService);
 
-  constructor(private http: HttpClient) {}
+  constructor(private _http: HttpClient,
+    /* private mountPathService: MountPathService, */
+  ) {}
 
   /**
    * Gets text by key with fallback support
    */
   getText(key: string, params?: { [key: string]: string | number }): string {
-    const text = this.getNestedProperty(this.texts, key) || key;
-    return this.interpolateParams(text, params);
+    const text = this._getNestedProperty(this._texts, key) || key;
+    return this._interpolateParams(text, params);
   }
 
   /**
    * Loads texts from API with fallback to local assets
    */
-  loadTexts(language: string = 'es'): Observable<Texts> {
-    this.currentLanguage = language;
+  loadTexts(language: string = 'es'): Observable<any> {
+    this._currentLanguage = language;
+    // const technicalGrouping = this._configService.config.technicalGrouping;
+    // const url = `${technicalGrouping}/assets/i18n/${language}.json`;
+    const url = `/assets/i18n/${language}.json`;
 
-    return this.http.get<Texts>(`/assets/i18n/${language}.json`).pipe(
+    return this._http.get<any>(url).pipe(
       map((texts) => {
-        this.texts = { ...this.texts, ...texts };
-        return this.texts;
+        this._texts = { ...this._texts, ...texts };
+        console.log(texts, 'ttessssx');
+        return this._texts;
       })
     );
   }
@@ -42,7 +51,7 @@ export class TextService {
    * Sets current language
    */
   setLanguage(language: string): void {
-    this.currentLanguage = language;
+    this._currentLanguage = language;
     this.loadTexts(language);
   }
 
@@ -50,21 +59,30 @@ export class TextService {
    * Gets current language
    */
   getCurrentLanguage(): string {
-    return this.currentLanguage;
+    return this._currentLanguage;
   }
 
-  private getNestedProperty(obj: any, path: string): string {
-    return path.split('.').reduce((current, key) => current?.[key], obj);
+  private _getNestedProperty(obj: any, path: string): string {
+    const result = path.split('.').reduce((current, key) => current?.[key], obj);
+    // Ensure we always return a string
+    return typeof result === 'string' ? result : path;
   }
 
-  private interpolateParams(
+  private _interpolateParams(
     text: string,
-    params?: { [key: string]: string | number }
+    params?: { [key: string]: string | number; }
   ): string {
-    if (!params) return text;
+    // Ensure text is a string before calling replace
+    if (typeof text !== 'string') {
+      return typeof text === 'object' ? JSON.stringify(text) : String(text);
+    }
 
-    return text.replace(/\{\{(\w+)\}\}/g, (match, key) => {
-      return params[key]?.toString() || match;
-    });
+    if (!params) {
+      return text;
+    }
+
+    return text.replace(/\{(\w+)\}/g, (match, key) =>
+      params[key]?.toString() || match
+    );
   }
 }
