@@ -42,80 +42,28 @@
     </div>
 
     <!-- Success Message -->
-    <div class="account-success-page__message">
-      <h1 class="account-success-page__message__title">
-        <span class="account-success-page__message__title__prefix">
-          {{ getText('account.account-success.title.prefix') }}
-        </span>
-        <span class="account-success-page__message__title__highlight">
-          {{ getText('account.account-success.title.highlight') }}
-        </span>
-      </h1>
-
-      <p class="account-success-page__message__subtitle">
-        <span class="account-success-page__message__subtitle__prefix">
-          {{ getText('account.account-success.subtitle.prefix') }}
-        </span>
-        <span class="account-success-page__message__subtitle__highlight">
-          {{ getText('account.account-success.subtitle.highlight') }}
-        </span>
-      </p>
-
-      <p class="account-success-page__message__description">
-        {{ getText('account.account-success.description') }}
-      </p>
-    </div>
+    <app-success-message
+      [titlePrefix]="getText('account.account-success.title.prefix')"
+      [titleHighlight]="getText('account.account-success.title.highlight')"
+      [subtitlePrefix]="getText('account.account-success.subtitle.prefix')"
+      [subtitleHighlight]="getText('account.account-success.subtitle.highlight')"
+      [description]="getText('account.account-success.description')"
+    ></app-success-message>
 
     <!-- Find Branch Link -->
-    <div class="account-success-page__find-branch">
-      <button
-        class="account-success-page__find-branch__button"
-        (click)="findBranch()"
-      >
-        {{ getText('account.account-success.findBranch') }}
-        <span class="account-success-page__find-branch__arrow">></span>
-      </button>
-    </div>
+    <app-find-branch
+      [buttonText]="getText('account.account-success.findBranch')"
+      (findBranchClick)="findBranch()"
+    ></app-find-branch>
 
     <!-- Account Details Card -->
-    <div class="account-success-page__account-details">
-      <div class="account-success-page__account-details__card">
-        <h3 class="account-success-page__account-details__title">
-          {{ getText('account.account-success.accountDetails.title') }}
-        </h3>
-
-        <div class="account-success-page__account-details__info">
-          <div class="account-success-page__account-details__row">
-            <span class="account-success-page__account-details__label">
-              {{ getText('account.account-success.accountDetails.type') }}
-            </span>
-            <span class="account-success-page__account-details__value">
-              {{ accountDetails.type }}
-            </span>
-          </div>
-
-          <div class="account-success-page__account-details__row">
-            <span class="account-success-page__account-details__label">
-              {{ getText('account.account-success.accountDetails.currency') }}
-            </span>
-            <span class="account-success-page__account-details__value">
-              {{ accountDetails.currency }}
-            </span>
-          </div>
-        </div>
-
-        <div class="account-success-page__account-details__notification">
-          <div
-            class="account-success-page__account-details__notification__icon"
-          >
-            i
-          </div>
-          <p class="account-success-page__account-details__notification__text">
-            {{ getText('account.account-success.accountDetails.infoMessage') }}
-          </p>
-        </div>
-      </div>
-    </div>
+    <app-account-details
+      [title]="getText('account.account-success.accountDetails.title')"
+      [typeLabel]="getText('account.account-success.accountDetails.type')"
+      [currencyLabel]="getText('account.account-success.accountDetails.currency')"
+      [infoMessage]="getText('account.account-success.accountDetails.infoMessage')"
+      [accountData]="accountDetails"
+    ></app-account-details>
 
     <!-- Toast Notification -->
     <std-toast status="info" class="account-success-page__toast">

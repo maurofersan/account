@@ -1,0 +1,42 @@
+.success-message {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+
+    &__prefix {
+      color: #333;
+    }
+
+    &__highlight {
+      color: #e30613;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+
+    &__prefix {
+      color: #666;
+    }
+
+    &__highlight {
+      color: #e30613;
+      font-weight: 600;
+    }
+  }
+
+  &__description {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}

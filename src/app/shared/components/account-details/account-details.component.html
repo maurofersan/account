@@ -1,0 +1,36 @@
+<div class="account-details">
+  <div class="account-details__card">
+    <h3 class="account-details__title">
+      {{ title }}
+    </h3>
+
+    <div class="account-details__info">
+      <div class="account-details__row">
+        <span class="account-details__label">
+          {{ typeLabel }}
+        </span>
+        <span class="account-details__value">
+          {{ accountData.type }}
+        </span>
+      </div>
+
+      <div class="account-details__row">
+        <span class="account-details__label">
+          {{ currencyLabel }}
+        </span>
+        <span class="account-details__value">
+          {{ accountData.currency }}
+        </span>
+      </div>
+    </div>
+
+    <div class="account-details__notification">
+      <div class="account-details__notification__icon">
+        i
+      </div>
+      <p class="account-details__notification__text">
+        {{ infoMessage }}
+      </p>
+    </div>
+  </div>
+</div>

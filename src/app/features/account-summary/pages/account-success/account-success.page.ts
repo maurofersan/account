@@ -9,7 +9,12 @@ import { BaseComponent } from '../../../../shared/base/base.component';
 import { TextService } from '../../../../core/services/text.service';
 import { AccountStoreService } from '../../../../core/services/account-store.service';
 import { AccountApiService } from '../../../../core/services/account-api.service';
-import { AccountNavigationComponent } from '../../../../shared/components';
+import { 
+  AccountNavigationComponent,
+  SuccessMessageComponent,
+  FindBranchComponent,
+  AccountDetailsComponent
+} from '../../../../shared/components';
 import {
   UserData,
   AccountDetails,
@@ -18,7 +23,12 @@ import {
 @Component({
   selector: 'app-account-success-page',
   standalone: true,
-  imports: [AccountNavigationComponent],
+  imports: [
+    AccountNavigationComponent,
+    SuccessMessageComponent,
+    FindBranchComponent,
+    AccountDetailsComponent
+  ],
   templateUrl: './account-success.page.html',
   styleUrl: './account-success.page.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -1,0 +1,35 @@
+.find-branch {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  &__button {
+    background: none;
+    border: 2px solid #e30613;
+    color: #e30613;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover:not(:disabled) {
+      background-color: #e30613;
+      color: white;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__arrow {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
