@@ -92,7 +92,10 @@
         "title": "Detalle de tu cuenta",
         "type": "Tipo",
         "currency": "Moneda",
-        "infoMessage": "En unos minutos, recibirás los datos de tu cuenta en tu correo."
+        "infoMessage": {
+          "prefix": "En unos minutos, recibirás los",
+          "highlight": "datos de tu cuenta en tu correo."
+        }
       }
     },
     "common": {

@@ -16,6 +16,7 @@ export class AccountDetailsComponent {
   @Input() title = '';
   @Input() typeLabel = '';
   @Input() currencyLabel = '';
-  @Input() infoMessage = '';
+  @Input() infoMessagePrefix = '';
+  @Input() infoMessageHighlight = '';
   @Input() accountData: AccountDetailsData = { type: '', currency: '' };
 }
