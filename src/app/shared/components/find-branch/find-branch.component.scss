@@ -1,35 +1,53 @@
 .find-branch {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  padding: 0 1rem;
 
   &__button {
     background: none;
-    border: 2px solid #e30613;
-    color: #e30613;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-size: 1rem;
+    border: none;
+    color: #00a8a8;
+    padding: 0;
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    text-decoration: none;
+    position: relative;
 
     &:hover:not(:disabled) {
-      background-color: #e30613;
-      color: white;
+      color: #008a8a;
+      text-decoration: underline;
     }
 
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #00a8a8;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
   }
 
   &__arrow {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
+    color: #00a8a8;
   }
 }
