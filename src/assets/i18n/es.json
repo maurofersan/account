@@ -113,5 +113,22 @@
       "retry": "Intentar de nuevo",
       "success": "Operación exitosa"
     }
+  },
+  "identity-validation": {
+    "consumer": "Consumer",
+    "title": "No pudimos validar tu identidad",
+    "subtitle": "Vuelve a intentarlo en xx minutos/horas",
+    "backButton": "Volver"
+  },
+  "max-attempts": {
+    "consumer": "CONSUMER",
+    "title": "Has superado el máximo de intentos",
+    "subtitle": "Acércate a una agencia para continuar con tu proceso",
+    "backButton": "Volver"
+  },
+  "page-load-error": {
+    "title": "Ups... algo salió mal",
+    "subtitle": "No pudimos cargar la página. Intenta nuevamente en unos minutos.",
+    "backButton": "Volver"
   }
 }

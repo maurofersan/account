@@ -1,0 +1,48 @@
+<div class="max-attempts-exceeded" *ngIf="textsLoaded">
+  <!-- Header -->
+  <div class="max-attempts-exceeded__header">
+    <span class="max-attempts-exceeded__consumer">{{ consumerText }}</span>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-attempts-exceeded__content">
+    <!-- Illustration -->
+    <div class="max-attempts-exceeded__illustration">
+      <div class="max-attempts-exceeded__background-circle"></div>
+      <div class="max-attempts-exceeded__phone">
+        <div class="max-attempts-exceeded__phone-screen">
+          <div class="max-attempts-exceeded__phone-content">
+            <div class="max-attempts-exceeded__phone-line"></div>
+            <div class="max-attempts-exceeded__phone-line"></div>
+            <div class="max-attempts-exceeded__phone-circle"></div>
+            <div class="max-attempts-exceeded__phone-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="max-attempts-exceeded__error-icon">
+        <div class="max-attempts-exceeded__x-icon">×</div>
+      </div>
+    </div>
+
+    <!-- Text Content -->
+    <div class="max-attempts-exceeded__text">
+      <h1 class="max-attempts-exceeded__title">{{ title }}</h1>
+      <p class="max-attempts-exceeded__subtitle">{{ subtitle }}</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="max-attempts-exceeded__footer">
+    <button 
+      class="max-attempts-exceeded__back-btn"
+      (click)="onBackClick()"
+      type="button">
+      {{ backButtonText }}
+    </button>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="max-attempts-exceeded__loading" *ngIf="!textsLoaded">
+  <p>Cargando...</p>
+</div>

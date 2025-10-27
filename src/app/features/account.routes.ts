@@ -21,4 +21,19 @@ export const ACCOUNT_ROUTES: Routes = [
     loadComponent: () =>
       import('./account-summary').then((m) => m.AccountSuccessPageComponent),
   },
+  {
+    path: 'identity-validation-failed',
+    loadComponent: () =>
+      import('./identity-validation-failed').then((m) => m.IdentityValidationFailedComponent),
+  },
+  {
+    path: 'max-attempts-exceeded',
+    loadComponent: () =>
+      import('./max-attempts-exceeded').then((m) => m.MaxAttemptsExceededComponent),
+  },
+  {
+    path: 'page-load-error',
+    loadComponent: () =>
+      import('./page-load-error').then((m) => m.PageLoadErrorComponent),
+  },
 ];

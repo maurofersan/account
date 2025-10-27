@@ -1,0 +1,47 @@
+<div class="identity-validation-failed" *ngIf="textsLoaded">
+  <!-- Header -->
+  <div class="identity-validation-failed__header">
+    <span class="identity-validation-failed__consumer">{{ consumerText }}</span>
+  </div>
+
+  <!-- Main Content -->
+  <div class="identity-validation-failed__content">
+    <!-- Illustration -->
+    <div class="identity-validation-failed__illustration">
+      <div class="identity-validation-failed__phone">
+        <div class="identity-validation-failed__phone-screen">
+          <div class="identity-validation-failed__phone-content">
+            <div class="identity-validation-failed__phone-line"></div>
+            <div class="identity-validation-failed__phone-line"></div>
+            <div class="identity-validation-failed__phone-circle"></div>
+            <div class="identity-validation-failed__phone-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="identity-validation-failed__speech-bubble">
+        <div class="identity-validation-failed__x-icon">×</div>
+      </div>
+    </div>
+
+    <!-- Text Content -->
+    <div class="identity-validation-failed__text">
+      <h1 class="identity-validation-failed__title">{{ title }}</h1>
+      <p class="identity-validation-failed__subtitle">{{ subtitle }}</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="identity-validation-failed__footer">
+    <button 
+      class="identity-validation-failed__back-btn"
+      (click)="onBackClick()"
+      type="button">
+      {{ backButtonText }}
+    </button>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="identity-validation-failed__loading" *ngIf="!textsLoaded">
+  <p>Cargando...</p>
+</div>

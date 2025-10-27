@@ -1,0 +1,42 @@
+<div class="page-load-error" *ngIf="textsLoaded">
+  <!-- Main Content -->
+  <div class="page-load-error__content">
+    <!-- Illustration -->
+    <div class="page-load-error__illustration">
+      <div class="page-load-error__phone">
+        <div class="page-load-error__phone-screen">
+          <div class="page-load-error__phone-content">
+            <div class="page-load-error__phone-line"></div>
+            <div class="page-load-error__phone-line"></div>
+            <div class="page-load-error__phone-circle"></div>
+            <div class="page-load-error__phone-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="page-load-error__error-bubble">
+        <div class="page-load-error__x-icon">×</div>
+      </div>
+    </div>
+
+    <!-- Text Content -->
+    <div class="page-load-error__text">
+      <h1 class="page-load-error__title">{{ title }}</h1>
+      <p class="page-load-error__subtitle">{{ subtitle }}</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-load-error__footer">
+    <button 
+      class="page-load-error__back-btn"
+      (click)="onBackClick()"
+      type="button">
+      {{ backButtonText }}
+    </button>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="page-load-error__loading" *ngIf="!textsLoaded">
+  <p>Cargando...</p>
+</div>
