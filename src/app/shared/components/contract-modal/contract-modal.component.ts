@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Nl2brPipe } from '../../pipes/nl2br.pipe';
 
 @Component({
@@ -9,13 +9,40 @@ import { Nl2brPipe } from '../../pipes/nl2br.pipe';
   styleUrl: './contract-modal.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ContractModalComponent {
+export class ContractModalComponent implements AfterViewInit {
   @Input() isOpen = false;
   @Input() title = '';
   @Input() content = '';
   @Input() agreeButtonText = '';
   @Output() close = new EventEmitter<void>();
   @Output() agree = new EventEmitter<void>();
+  
+  @ViewChild('scrollableContent', { static: false }) scrollableContent!: ElementRef;
+  private scrollTimeout: any;
+
+  ngAfterViewInit(): void {
+    if (this.scrollableContent) {
+      this.setupScrollListener();
+    }
+  }
+
+  private setupScrollListener(): void {
+    const element = this.scrollableContent.nativeElement;
+    
+    element.addEventListener('scroll', () => {
+      element.classList.add('scrolling');
+      
+      // Limpiar timeout anterior
+      if (this.scrollTimeout) {
+        clearTimeout(this.scrollTimeout);
+      }
+      
+      // Ocultar scrollbar después de 1 segundo sin scroll
+      this.scrollTimeout = setTimeout(() => {
+        element.classList.remove('scrolling');
+      }, 1000);
+    });
+  }
 
   onClose(): void {
     this.close.emit();
