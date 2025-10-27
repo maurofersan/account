@@ -1,0 +1,57 @@
+.declaration-checkbox {
+  margin-bottom: 1.5rem;
+
+  &__container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  &__label {
+    cursor: pointer;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #333333;
+    flex: 1;
+  }
+
+  &__input {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    appearance: none;
+    position: relative;
+
+    &:checked {
+      background: #e30613;
+      border-color: #e30613;
+
+      &::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+      }
+    }
+
+    &:focus {
+      outline: 2px solid #e30613;
+      outline-offset: 2px;
+    }
+  }
+
+  &__text {
+    flex: 1;
+    font-weight: 400;
+    color: #333333;
+  }
+}

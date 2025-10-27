@@ -7,3 +7,5 @@ export * from './consent-checkbox/consent-checkbox.component';
 export * from './success-message/success-message.component';
 export * from './find-branch/find-branch.component';
 export * from './account-details/account-details.component';
+export * from './declaration-checkbox/declaration-checkbox.component';
+export * from './contract-modal/contract-modal.component';

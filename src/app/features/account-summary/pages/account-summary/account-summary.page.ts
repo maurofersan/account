@@ -14,6 +14,8 @@ import {
   AccountNavigationComponent,
   AccountTitleSectionComponent,
   ConsentCheckboxComponent,
+  DeclarationCheckboxComponent,
+  ContractModalComponent,
 } from '../../../../shared/components';
 import { StdButtonDirective } from '../../../../shared/directives';
 
@@ -25,6 +27,8 @@ import { StdButtonDirective } from '../../../../shared/directives';
     AccountNavigationComponent,
     AccountTitleSectionComponent,
     ConsentCheckboxComponent,
+    DeclarationCheckboxComponent,
+    ContractModalComponent,
     StdButtonDirective,
   ],
   templateUrl: './account-summary.page.html',
@@ -66,6 +70,8 @@ export class AccountSummaryPageComponent
   };
 
   consentAccepted = false;
+  declarationAccepted = false;
+  isContractModalOpen = false;
 
   private textService = inject(TextService);
   private accountStore = inject(AccountStoreService);
@@ -139,9 +145,38 @@ export class AccountSummaryPageComponent
   }
 
   /**
+   * Handles declaration checkbox change
+   */
+  onDeclarationChange(accepted: boolean): void {
+    this.declarationAccepted = accepted;
+  }
+
+  /**
+   * Opens contract modal
+   */
+  onOpenContract(): void {
+    this.isContractModalOpen = true;
+  }
+
+  /**
+   * Closes contract modal
+   */
+  onCloseContract(): void {
+    this.isContractModalOpen = false;
+  }
+
+  /**
+   * Handles contract agreement
+   */
+  onContractAgree(): void {
+    this.consentAccepted = true;
+    this.isContractModalOpen = false;
+  }
+
+  /**
    * Checks if continue button should be enabled
    */
   get canContinue(): boolean {
-    return this.consentAccepted && !this.roadNameError && !this.roadNumberError;
+    return this.consentAccepted && this.declarationAccepted && !this.roadNameError && !this.roadNumberError;
   }
 }

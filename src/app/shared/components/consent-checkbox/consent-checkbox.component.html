@@ -1,20 +1,23 @@
 <div class="consent-checkbox">
-  <label class="consent-checkbox__label">
+  <div class="consent-checkbox__container">
     <input
       type="checkbox"
       class="consent-checkbox__checkbox"
       [checked]="checked"
       (change)="onCheckboxChange($event)"
+      id="consent-checkbox"
     />
-    <span class="consent-checkbox__text">
-      {{ text }}
-      <span class="consent-checkbox__text__highlight">
-        {{ highlight1 }}
+    <label class="consent-checkbox__label" for="consent-checkbox">
+      <span class="consent-checkbox__text">
+        {{ text }}
+        <span class="consent-checkbox__text__highlight" (click)="onContractClick($event)">
+          {{ highlight1 }}
+        </span>
+        {{ suffix }}
+        <span class="consent-checkbox__text__highlight" (click)="onContractClick($event)">
+          {{ highlight2 }}
+        </span>.
       </span>
-      {{ suffix }}
-      <span class="consent-checkbox__text__highlight">
-        {{ highlight2 }}
-      </span>.
-    </span>
-  </label>
+    </label>
+  </div>
 </div>

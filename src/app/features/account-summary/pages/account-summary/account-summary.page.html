@@ -204,7 +204,15 @@
       [suffix]="getText('account.account-summary.consent.suffix')"
       [highlight2]="getText('account.account-summary.consent.highlight2')"
       (change)="onConsentChange($event)"
+      (openContract)="onOpenContract()"
     ></app-consent-checkbox>
+
+    <!-- Declaration Section -->
+    <app-declaration-checkbox
+      [checked]="declarationAccepted"
+      [text]="getText('account.account-summary.declaration.text')"
+      (change)="onDeclarationChange($event)"
+    ></app-declaration-checkbox>
 
     <!-- Actions -->
     <div class="account-summary-page__actions">
@@ -219,11 +227,15 @@
       </std-button>
     </div>
 
-    <!-- Toast Notification -->
-    @if (!consentAccepted) {
-    <std-toast status="info" class="account-summary-page__toast">
-      Por favor, acepta los términos y condiciones para continuar.
-    </std-toast>
-    }
+    <!-- Contract Modal -->
+    <app-contract-modal
+      [isOpen]="isContractModalOpen"
+      [title]="getText('account.account-summary.contract.title')"
+      [content]="getText('account.account-summary.contract.content')"
+      [agreeButtonText]="getText('account.account-summary.contract.agreeButton')"
+      (close)="onCloseContract()"
+      (agree)="onContractAgree()"
+    ></app-contract-modal>
+
   </div>
 </div>

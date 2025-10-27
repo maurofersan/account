@@ -1,0 +1,16 @@
+<div class="declaration-checkbox">
+  <div class="declaration-checkbox__container">
+    <input
+      type="checkbox"
+      class="declaration-checkbox__input"
+      [checked]="checked"
+      (change)="onCheckboxChange($event)"
+      id="declaration-checkbox"
+    />
+    <label class="declaration-checkbox__label" for="declaration-checkbox">
+      <span class="declaration-checkbox__text">
+        {{ text }}
+      </span>
+    </label>
+  </div>
+</div>

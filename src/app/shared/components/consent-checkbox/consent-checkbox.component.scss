@@ -1,13 +1,10 @@
 .consent-checkbox {
   margin: 32px 0;
 
-  &__label {
+  &__container {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 1.4;
   }
 
   &__checkbox {
@@ -20,10 +17,16 @@
     margin-top: 2px;
   }
 
+  &__label {
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.4;
+    flex: 1;
+  }
+
   &__text {
     color: #212529;
     font-weight: 400;
-    flex: 1;
 
     &__highlight {
       color: #20c997;

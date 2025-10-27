@@ -75,6 +75,14 @@
         "suffix": "y",
         "highlight2": "Cartilla de Información"
       },
+      "declaration": {
+        "text": "Declaro que son mis datos actualizados y tengo conocimiento que han sido obtenidos de fuentes públicas para esta contratación."
+      },
+      "contract": {
+        "title": "Contrato",
+        "content": "Información del contrato. ¿Cómo tratamos tus datos personales para los fines comerciales y/o publicitarios?\n\nEn SANTANDER CONSUMER BANK recopilamos y tratamos tus datos personales para fines comerciales y/o publicitarios, conforme a lo establecido en la Ley N° 29733, Ley de Protección de Datos Personales y su Reglamento, aprobado por Decreto Supremo N° 003-2013-JUS.\n\n1. SANTANDER CONSUMER BANK S.A. (RUC: 20255993225), con domicilio en Av. Paseo de la República 3587 – San Isidro, Lima, ha registrado sus bases de datos de clientes y prospectos ante la Autoridad Nacional de Protección de Datos Personales del Ministerio de Justicia.\n\n2. En SANTANDER CONSUMER BANK recopilamos tus datos personales de las siguientes formas:\n\n3. Interacciones directas: Nos proporcionas tus datos al completar formularios, comunicarte con nosotros por teléfono, correo electrónico o de cualquier otra manera.\n\n4. Interacciones automatizadas: Recopilamos datos técnicos sobre tu equipo, patrones de navegación y uso de nuestros servicios.\n\n5. Terceros: Podemos recibir datos personales sobre ti de terceros, como agencias de crédito o proveedores de servicios.\n\n6. Finalidades del tratamiento: Utilizamos tus datos personales para:\n   - Proporcionar y mejorar nuestros servicios bancarios\n   - Comunicaciones comerciales y publicitarias\n   - Análisis de riesgo crediticio\n   - Cumplimiento de obligaciones legales\n\n7. Base legal: El tratamiento se basa en tu consentimiento, la ejecución del contrato y el cumplimiento de obligaciones legales.\n\n8. Derechos: Tienes derecho a acceder, rectificar, cancelar u oponerte al tratamiento de tus datos personales, así como a la portabilidad de los mismos.\n\n9. Conservación: Conservaremos tus datos personales durante el tiempo necesario para cumplir con las finalidades descritas y las obligaciones legales aplicables.\n\n10. Seguridad: Implementamos medidas técnicas y organizativas apropiadas para proteger tus datos personales contra el acceso no autorizado, alteración, divulgación o destrucción.",
+        "agreeButton": "Estoy de acuerdo"
+      },
       "continueButton": "Continuar"
     },
     "account-success": {

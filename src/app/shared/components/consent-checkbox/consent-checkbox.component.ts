@@ -14,9 +14,19 @@ export class ConsentCheckboxComponent {
   @Input() suffix: string = '';
   @Input() highlight2: string = '';
   @Output() change = new EventEmitter<boolean>();
+  @Output() openContract = new EventEmitter<void>();
 
   onCheckboxChange(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
     const target = event.target as HTMLInputElement;
-    this.change.emit(target.checked);
+    const newValue = !this.checked; // Toggle the current value
+    this.change.emit(newValue);
+  }
+
+  onContractClick(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.openContract.emit();
   }
 }

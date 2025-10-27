@@ -1,0 +1,29 @@
+<div class="contract-modal" [class.contract-modal--open]="isOpen" (click)="onBackdropClick($event)">
+  <div class="contract-modal__content">
+    <!-- Header -->
+    <div class="contract-modal__header">
+      <h2 class="contract-modal__title">{{ title }}</h2>
+      <button class="contract-modal__close" (click)="onClose()" type="button">
+        <span class="contract-modal__close-icon">×</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="contract-modal__body">
+      <div class="contract-modal__scrollable-content">
+        <div class="contract-modal__text" [innerHTML]="content | nl2br"></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="contract-modal__footer">
+      <button 
+        class="contract-modal__agree-btn" 
+        (click)="onAgree()" 
+        type="button"
+      >
+        {{ agreeButtonText }}
+      </button>
+    </div>
+  </div>
+</div>
