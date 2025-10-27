@@ -51,37 +51,80 @@
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- Separator -->
+      <div class="account-summary-page__separator"></div>
+
+      <!-- Contact Data Section -->
+      <div class="account-summary-page__section">
+        <h3 class="account-summary-page__section__title">
+          {{ getText('account.account-summary.contactData.title') }}
+        </h3>
+
+        <div class="account-summary-page__section__fields">
           <div class="account-summary-page__field">
             <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.personalData.maritalStatus')
-              }}
+              {{ getText('account.account-summary.contactData.mobile') }}
             </label>
-            <select class="account-summary-page__field__select">
-              <option value="">
-                {{
-                getText('account.account-summary.personalData.selectPlaceholder')
-                }}
-              </option>
-            </select>
+            <div class="account-summary-page__field__value">
+              {{ contactData.mobile }}
+            </div>
           </div>
 
           <div class="account-summary-page__field">
             <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.personalData.gender') }}
+              {{ getText('account.account-summary.contactData.email') }}
             </label>
-            <select class="account-summary-page__field__select">
-              <option value="">
-                {{
-                getText('account.account-summary.personalData.selectPlaceholder')
-                }}
-              </option>
-            </select>
+            <div class="account-summary-page__field__value">
+              {{ contactData.email }}
+            </div>
           </div>
         </div>
       </div>
 
+      <!-- Separator -->
+      <div class="account-summary-page__separator"></div>
+
+      <!-- New Account Section -->
+      <div class="account-summary-page__section">
+        <h3 class="account-summary-page__section__title">
+          {{ getText('account.account-summary.newAccount.title') }}
+        </h3>
+
+        <div class="account-summary-page__section__fields">
+          <!-- Type and Currency in same row -->
+          <div class="account-summary-page__field-row">
+            <div class="account-summary-page__field">
+              <label class="account-summary-page__field__label">
+                {{ getText('account.account-summary.newAccount.type') }}
+              </label>
+              <div class="account-summary-page__field__value">
+                {{ newAccountData.type }}
+              </div>
+            </div>
+
+            <div class="account-summary-page__field">
+              <label class="account-summary-page__field__label">
+                {{ getText('account.account-summary.newAccount.currency') }}
+              </label>
+              <div class="account-summary-page__field__value">
+                {{ newAccountData.currency }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Separator -->
+      <div class="account-summary-page__separator"></div>
+
       <!-- Address Section -->
       <div class="account-summary-page__section">
+        <p class="account-summary-page__section__intro">
+          {{ getText('account.account-summary.address.intro') }}
+        </p>
         <h3 class="account-summary-page__section__title">
           {{ getText('account.account-summary.address.title') }}
         </h3>
@@ -131,6 +174,9 @@
               {{ getText('account.account-summary.address.department') }}
             </label>
             <select class="account-summary-page__field__select">
+              <option value="">
+                {{ getText('account.account-summary.address.departmentPlaceholder') }}
+              </option>
               <option value="Lima" selected>Lima</option>
             </select>
           </div>
@@ -139,61 +185,49 @@
             <label class="account-summary-page__field__label">
               {{ getText('account.account-summary.address.district') }}
             </label>
-            <input type="text" class="account-summary-page__field__input" />
+            <select class="account-summary-page__field__select">
+              <option value="">
+                {{ getText('account.account-summary.address.districtPlaceholder') }}
+              </option>
+            </select>
           </div>
         </div>
       </div>
 
-      <!-- Contact Data Section -->
+      <!-- Separator -->
+      <div class="account-summary-page__separator"></div>
+
+      <!-- Additional Data Section -->
       <div class="account-summary-page__section">
         <h3 class="account-summary-page__section__title">
-          {{ getText('account.account-summary.contactData.title') }}
+          {{ getText('account.account-summary.additionalData.title') }}
         </h3>
 
         <div class="account-summary-page__section__fields">
           <div class="account-summary-page__field">
             <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.contactData.mobile') }}
+              {{ getText('account.account-summary.personalData.maritalStatus') }}
             </label>
-            <div class="account-summary-page__field__value">
-              {{ contactData.mobile }}
-            </div>
+            <select class="account-summary-page__field__select">
+              <option value="">
+                {{
+                getText('account.account-summary.personalData.selectPlaceholder')
+                }}
+              </option>
+            </select>
           </div>
 
           <div class="account-summary-page__field">
             <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.contactData.email') }}
+              {{ getText('account.account-summary.personalData.gender') }}
             </label>
-            <div class="account-summary-page__field__value">
-              {{ contactData.email }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- New Account Section -->
-      <div class="account-summary-page__section">
-        <h3 class="account-summary-page__section__title">
-          {{ getText('account.account-summary.newAccount.title') }}
-        </h3>
-
-        <div class="account-summary-page__section__fields">
-          <div class="account-summary-page__field">
-            <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.newAccount.type') }}
-            </label>
-            <div class="account-summary-page__field__value">
-              {{ newAccountData.type }}
-            </div>
-          </div>
-
-          <div class="account-summary-page__field">
-            <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.newAccount.currency') }}
-            </label>
-            <div class="account-summary-page__field__value">
-              {{ newAccountData.currency }}
-            </div>
+            <select class="account-summary-page__field__select">
+              <option value="">
+                {{
+                getText('account.account-summary.personalData.selectPlaceholder')
+                }}
+              </option>
+            </select>
           </div>
         </div>
       </div>
@@ -221,12 +255,12 @@
     <div class="account-summary-page__actions">
       <std-button
         appStdButton
-        class="account-summary-page__continue-btn"
-        [class.account-summary-page__continue-btn--disabled]="!canContinue"
+        class="account-summary-page__confirm-btn"
+        [class.account-summary-page__confirm-btn--disabled]="!canContinue"
         [disabled]="!canContinue"
         (click)="continue()"
       >
-        {{ getText('account.account-summary.continueButton') }}
+        {{ getText('account.account-summary.confirmButton') }}
       </std-button>
     </div>
 
