@@ -30,21 +30,24 @@
             </div>
           </div>
 
-          <div class="account-summary-page__field">
-            <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.personalData.dni') }}
-            </label>
-            <div class="account-summary-page__field__value">
-              {{ personalData.dni }}
+          <!-- DNI and Birth Date in same row -->
+          <div class="account-summary-page__field-row">
+            <div class="account-summary-page__field">
+              <label class="account-summary-page__field__label">
+                {{ getText('account.account-summary.personalData.dni') }}
+              </label>
+              <div class="account-summary-page__field__value">
+                {{ personalData.dni }}
+              </div>
             </div>
-          </div>
 
-          <div class="account-summary-page__field">
-            <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.personalData.birthDate') }}
-            </label>
-            <div class="account-summary-page__field__value">
-              {{ personalData.birthDate }}
+            <div class="account-summary-page__field">
+              <label class="account-summary-page__field__label">
+                {{ getText('account.account-summary.personalData.birthDate') }}
+              </label>
+              <div class="account-summary-page__field__value">
+                {{ personalData.birthDate }}
+              </div>
             </div>
           </div>
 
