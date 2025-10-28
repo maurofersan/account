@@ -14,8 +14,28 @@
   min-height: 420px; /* altura uniforme entre cards */
 
   &--selected {
-    border-color: #28a745;
-    box-shadow: 0 6px 16px rgba(40, 167, 69, 0.2);
+    border-color: #137E84;
+    box-shadow: 0 6px 16px rgba(19, 126, 132, 0.2);
+    position: relative;
+    
+    /* Degradado de selección */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(19, 126, 132, 0.08) 0%,
+        rgba(19, 126, 132, 0.04) 50%,
+        rgba(19, 126, 132, 0.02) 100%
+      );
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 1;
+    }
   }
 
   &__radio {
