@@ -204,30 +204,33 @@
         </h3>
 
         <div class="account-summary-page__section__fields">
-          <div class="account-summary-page__field">
-            <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.personalData.maritalStatus') }}
-            </label>
-            <select class="account-summary-page__field__select">
-              <option value="">
-                {{
-                getText('account.account-summary.personalData.selectPlaceholder')
-                }}
-              </option>
-            </select>
-          </div>
+          <!-- Marital Status and Gender in same row -->
+          <div class="account-summary-page__field-row">
+            <div class="account-summary-page__field">
+              <label class="account-summary-page__field__label">
+                {{ getText('account.account-summary.personalData.maritalStatus') }}
+              </label>
+              <select class="account-summary-page__field__select">
+                <option value="">
+                  {{
+                  getText('account.account-summary.personalData.selectPlaceholder')
+                  }}
+                </option>
+              </select>
+            </div>
 
-          <div class="account-summary-page__field">
-            <label class="account-summary-page__field__label">
-              {{ getText('account.account-summary.personalData.gender') }}
-            </label>
-            <select class="account-summary-page__field__select">
-              <option value="">
-                {{
-                getText('account.account-summary.personalData.selectPlaceholder')
-                }}
-              </option>
-            </select>
+            <div class="account-summary-page__field">
+              <label class="account-summary-page__field__label">
+                {{ getText('account.account-summary.personalData.gender') }}
+              </label>
+              <select class="account-summary-page__field__select">
+                <option value="">
+                  {{
+                  getText('account.account-summary.personalData.selectPlaceholder')
+                  }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
