@@ -30,13 +30,13 @@
       font-size: 18px;
       font-weight: 600;
       color: #212529;
-      margin: 0;
+      margin: 0 0 20px 0;
     }
 
     &__intro {
       font-size: 14px;
       color: #6c757d;
-      margin: 0 0 16px 0;
+      margin: 0 0 20px 0;
       line-height: 1.4;
     }
 
@@ -69,12 +69,19 @@
   &__field {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 
     &__label {
-      font-size: 14px;
-      font-weight: 500;
-      color: #6c757d;
+      font-size: 16px;
+      font-weight: 700;
+      color: #222222;
+
+      // Labels for personal data, contact data, and new account sections
+      &--highlight {
+        font-size: 14px;
+        font-weight: 400;
+        color: #727272;
+      }
     }
 
     &__value {
