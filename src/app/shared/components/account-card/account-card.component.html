@@ -4,13 +4,10 @@
   (click)="onSelectAccount()"
 >
   <div class="account-card__radio">
-    <div
-      class="account-card__radio__circle"
-      [class.account-card__radio__circle--selected]="isSelected"
-    >
-      @if (isSelected) {
+    <div class="account-card__radio__circle">
+      <div class="account-card__radio__circle__outer"></div>
+      <div class="account-card__radio__circle__middle"></div>
       <div class="account-card__radio__circle__inner"></div>
-      }
     </div>
   </div>
 
