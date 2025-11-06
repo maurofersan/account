@@ -48,6 +48,81 @@ export interface AccountSelectionResponse {
   };
 }
 
+// Redis Service Interfaces
+export interface RedisCreateRequest {
+  documentType: string;
+  documentNumber: string;
+  phoneNumber: string;
+  email: string;
+  isPeruvian: string;
+  acceptedPrivacyPolicy: string;
+  productId: string;
+  productName: string;
+  accountTypeId: string;
+  accountTypeName: string;
+  statusValotp: string;
+  currency: string;
+}
+
+export interface LeadProductRecord {
+  leadId: number;
+  productCode: string;
+  subproductCode: string;
+  evaluationType: string;
+  strategyColorCode: string;
+  approvedAmount: number;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+}
+
+export interface LoanLeadRecord {
+  loanId: number;
+  leadId: number;
+  approvedAmount: number;
+  disbursedAmount: number;
+  interestRate: number;
+  termMonths: number;
+  startDate: string;
+  endDate: string;
+  loanStatus: string;
+  contractPath: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+  isActive: boolean;
+}
+
+export interface RedisCreateResponse {
+  leadId: number;
+  documentType: string;
+  documentNumber: string;
+  firstLastname: string;
+  secondLastname: string;
+  fullName: string;
+  birthDate: string;
+  phoneNumber: string;
+  maritalStatus: string;
+  gender: string;
+  homeAddress: string;
+  companyRuc: string;
+  companyName: string;
+  companyPhone: string;
+  companyAddress: string;
+  campaignStartDate: string;
+  income: number;
+  bureauScore: number;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+  isActive: boolean;
+  leadProductRecord?: LeadProductRecord;
+  loanLeadRecord?: LoanLeadRecord;
+}
+
 export interface UserData {
   fullName: string;
   firstName: string;
@@ -99,4 +174,79 @@ export interface AccountSelectionResponse {
     currency: Currency;
     accountNumber?: string;
   };
+}
+
+// Redis Service Interfaces
+export interface RedisCreateRequest {
+  documentType: string;
+  documentNumber: string;
+  phoneNumber: string;
+  email: string;
+  isPeruvian: string;
+  acceptedPrivacyPolicy: string;
+  productId: string;
+  productName: string;
+  accountTypeId: string;
+  accountTypeName: string;
+  statusValotp: string;
+  currency: string;
+}
+
+export interface LeadProductRecord {
+  leadId: number;
+  productCode: string;
+  subproductCode: string;
+  evaluationType: string;
+  strategyColorCode: string;
+  approvedAmount: number;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+}
+
+export interface LoanLeadRecord {
+  loanId: number;
+  leadId: number;
+  approvedAmount: number;
+  disbursedAmount: number;
+  interestRate: number;
+  termMonths: number;
+  startDate: string;
+  endDate: string;
+  loanStatus: string;
+  contractPath: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+  isActive: boolean;
+}
+
+export interface RedisCreateResponse {
+  leadId: number;
+  documentType: string;
+  documentNumber: string;
+  firstLastname: string;
+  secondLastname: string;
+  fullName: string;
+  birthDate: string;
+  phoneNumber: string;
+  maritalStatus: string;
+  gender: string;
+  homeAddress: string;
+  companyRuc: string;
+  companyName: string;
+  companyPhone: string;
+  companyAddress: string;
+  campaignStartDate: string;
+  income: number;
+  bureauScore: number;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+  isActive: boolean;
+  leadProductRecord?: LeadProductRecord;
+  loanLeadRecord?: LoanLeadRecord;
 }

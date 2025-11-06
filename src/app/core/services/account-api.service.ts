@@ -6,6 +6,8 @@ import {
   Currency,
   AccountSelectionRequest,
   AccountSelectionResponse,
+  RedisCreateRequest,
+  RedisCreateResponse,
 } from '../../shared/interfaces/account.interfaces';
 
 @Injectable({
@@ -63,5 +65,17 @@ export class AccountApiService {
       isValid: boolean;
       message?: string;
     }>(`${this.baseUrl}/validate`, { accountId, currency });
+  }
+
+  /**
+   * Creates account in Redis
+   */
+  createRedisAccount(
+    request: RedisCreateRequest
+  ): Observable<RedisCreateResponse> {
+    return this.http.post<RedisCreateResponse>(
+      '/redis/create',
+      request
+    );
   }
 }

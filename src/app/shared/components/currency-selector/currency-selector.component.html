@@ -2,6 +2,7 @@
   <div class="currency-selector__container">
     @for (currency of currencies; track currency.code) {
     <std-button
+    size="s"
       class="currency-selector__option"
       [class.currency-selector__option--selected]="
         selectedCurrency?.code === currency.code

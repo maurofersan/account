@@ -22,6 +22,8 @@ import { PrefixAssetPipe } from '../../../../shared/pipes/prefix-asset.pipe';
 import {
   Account,
   Currency,
+  RedisCreateRequest,
+  RedisCreateResponse,
 } from '../../../../shared/interfaces/account.interfaces';
 
 @Component({
@@ -49,7 +51,7 @@ export class SelectAccountPageComponent
     { code: 'USD', name: 'Dólares', symbol: 'US$' },
   ];
   selectedAccount: Account | null = null;
-  selectedCurrency: Currency = this.currencies[0];
+  selectedCurrency: Currency | null = null;
   isLoading = false;
   imageSlider1Url = '';
   imageSlider2Url = '';
@@ -92,6 +94,7 @@ export class SelectAccountPageComponent
       },
     });
   }
+
 
   /**
    * Loads available accounts
@@ -211,9 +214,75 @@ export class SelectAccountPageComponent
    */
   continue(): void {
     if (this.selectedAccount && this.selectedCurrency) {
-      this.accountStore.setCurrentStep('account-summary');
-      this.router.navigate(['/cuenta/resumen-cuenta']);
+      this.isLoading = true;
+      this.accountStore.setLoading(true);
+
+      const request = this.buildRedisRequest();
+      
+      this.accountApi.createRedisAccount(request).subscribe({
+        next: (response: RedisCreateResponse) => {
+          console.log('Redis create response:', response);
+          // Guardar la respuesta en el store o localStorage si es necesario
+          this.accountStore.setCurrentStep('account-summary');
+          this.router.navigate(['/cuenta/resumen-cuenta']);
+          this.isLoading = false;
+          this.accountStore.setLoading(false);
+        },
+        error: (error) => {
+          console.error('Error creating account in Redis:', error);
+          this.accountStore.setError('Error al crear la cuenta. Por favor, intenta nuevamente.');
+          this.isLoading = false;
+          this.accountStore.setLoading(false);
+        }
+      });
     }
+  }
+
+  /**
+   * Builds the Redis create request from current form data
+   */
+  private buildRedisRequest(): RedisCreateRequest {
+    // Obtener datos del usuario desde localStorage o de otro servicio
+    // Por ahora, usamos valores por defecto o desde localStorage
+    const documentType = localStorage.getItem('documentType') || '0ed651ca-908b-4f83-9626-d6b4740d97e7';
+    const documentNumber = localStorage.getItem('documentNumber') || '';
+    const phoneNumber = localStorage.getItem('phoneNumber') || '';
+    const email = localStorage.getItem('email') || '';
+    const isPeruvian = localStorage.getItem('isPeruvian') || 'S';
+    const acceptedPrivacyPolicy = localStorage.getItem('acceptedPrivacyPolicy') || 'S';
+    const statusValotp = localStorage.getItem('statusValotp') || 'S';
+
+    // Mapear el tipo de cuenta seleccionada
+    const accountTypeId = this.selectedAccount?.id === '1' 
+      ? '6141dbe5-1662-4553-a8a0-aafcb658fbbf' // Cuenta Imparable
+      : '6141dbe5-1662-4553-a8a0-aafcb658fbbf'; // Por defecto, ajustar según necesidad
+    
+    const accountTypeName = this.selectedAccount?.type || 'Cuenta Imparable';
+    
+    // Mapear el productId según el tipo de cuenta
+    const productId = this.selectedAccount?.id === '1'
+      ? '91ba39fa-754a-471e-8606-bcdc064496dd' // Cuenta Imparable
+      : '91ba39fa-754a-471e-8606-bcdc064496dd'; // Por defecto, ajustar según necesidad
+
+    // Mapear la moneda
+    const currencyId = this.selectedCurrency?.code === 'PEN'
+      ? 'b0006e00-8d7d-4395-af9f-a965eefe1b4b' // Soles
+      : 'b0006e00-8d7d-4395-af9f-a965eefe1b4b'; // Por defecto, ajustar según necesidad
+
+    return {
+      documentType,
+      documentNumber,
+      phoneNumber,
+      email,
+      isPeruvian,
+      acceptedPrivacyPolicy,
+      productId,
+      productName: 'Apertura de Cuenta',
+      accountTypeId,
+      accountTypeName,
+      statusValotp,
+      currency: currencyId,
+    };
   }
 
   /**
