@@ -8,6 +8,9 @@ import {
   AccountSelectionResponse,
   RedisCreateRequest,
   RedisCreateResponse,
+  Department,
+  Province,
+  District,
 } from '../../shared/interfaces/account.interfaces';
 
 @Injectable({
@@ -77,5 +80,38 @@ export class AccountApiService {
       '/redis/create',
       request
     );
+  }
+
+  /**
+   * Gets account and user data by productId and documentNumber
+   */
+  getAccountAndUserData(
+    productId: string,
+    documentNumber: string
+  ): Observable<RedisCreateResponse> {
+    return this.http.get<RedisCreateResponse>(
+      `/redis/${productId}/${documentNumber}`
+    );
+  }
+
+  /**
+   * Gets all departments
+   */
+  getDepartments(): Observable<Department[]> {
+    return this.http.get<Department[]>('/departments');
+  }
+
+  /**
+   * Gets provinces by department ID
+   */
+  getProvincesByDepartment(departmentId: string): Observable<Province[]> {
+    return this.http.get<Province[]>(`/departments/${departmentId}/provinces`);
+  }
+
+  /**
+   * Gets districts by province ID
+   */
+  getDistrictsByProvince(provinceId: string): Observable<District[]> {
+    return this.http.get<District[]>(`/provinces/${provinceId}/districts`);
   }
 }

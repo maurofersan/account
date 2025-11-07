@@ -173,11 +173,40 @@
             <label class="account-summary-page__field__label">
               {{ getText('account.account-summary.address.department') }}
             </label>
-            <select class="account-summary-page__field__select">
+            <select 
+              class="account-summary-page__field__select" 
+              [value]="addressData.departmentId"
+              (change)="onDepartmentChange($event)"
+            >
               <option value="">
                 {{ getText('account.account-summary.address.departmentPlaceholder') }}
               </option>
-              <option value="Lima" selected>Lima</option>
+              @for (department of departments; track department.id) {
+                <option [value]="department.id" [selected]="addressData.departmentId === department.id">
+                  {{ department.name }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <div class="account-summary-page__field">
+            <label class="account-summary-page__field__label">
+              Provincia
+            </label>
+            <select 
+              class="account-summary-page__field__select" 
+              [value]="addressData.provinceId"
+              (change)="onProvinceChange($event)"
+              [disabled]="!addressData.departmentId || provinces.length === 0"
+            >
+              <option value="">
+                Elige provincia
+              </option>
+              @for (province of provinces; track province.id) {
+                <option [value]="province.id" [selected]="addressData.provinceId === province.id">
+                  {{ province.name }}
+                </option>
+              }
             </select>
           </div>
 
@@ -185,10 +214,20 @@
             <label class="account-summary-page__field__label">
               {{ getText('account.account-summary.address.district') }}
             </label>
-            <select class="account-summary-page__field__select">
+            <select 
+              class="account-summary-page__field__select" 
+              [value]="addressData.districtId"
+              (change)="onDistrictChange($event)"
+              [disabled]="!addressData.provinceId || districts.length === 0"
+            >
               <option value="">
                 {{ getText('account.account-summary.address.districtPlaceholder') }}
               </option>
+              @for (district of districts; track district.id) {
+                <option [value]="district.id" [selected]="addressData.districtId === district.id">
+                  {{ district.name }}
+                </option>
+              }
             </select>
           </div>
         </div>
