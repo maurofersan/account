@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 import { BaseComponent } from '../../../../shared/base/base.component';
 import { TextService } from '../../../../core/services/text.service';
 import { AccountStoreService } from '../../../../core/services/account-store.service';
@@ -67,8 +68,8 @@ export class AccountSummaryPageComponent
 
   // Location data
   departments: Department[] = [];
-  provinces: Province[] = [];
-  districts: District[] = [];
+  allProvinces: Province[] = []; // Todas las provincias cargadas
+  allDistricts: District[] = []; // Todos los distritos cargados
 
   // Validation states
   roadNameError = false;
@@ -146,26 +147,24 @@ export class AccountSummaryPageComponent
             district: data.district || '',
           };
 
-          // Si hay datos de ubicación, intentar encontrar los IDs y cargar provincias/distritos
+          // Si hay datos de ubicación, intentar encontrar los IDs
           if (data.department) {
             const department = this.departments.find(d => d.name === data.department);
             if (department) {
               this.addressData.departmentId = department.id;
-              this.loadProvinces(department.id);
               
-              // Si hay provincia, buscar su ID y cargar distritos
+              // Si hay provincia, buscar su ID
               if (data.province) {
                 // Esperar a que las provincias se carguen
                 setTimeout(() => {
-                  const province = this.provinces.find(p => p.name === data.province);
+                  const province = this.allProvinces.find(p => p.name === data.province && p.departmentId === department.id);
                   if (province) {
                     this.addressData.provinceId = province.id;
-                    this.loadDistricts(province.id);
                     
                     // Si hay distrito, buscar su ID
                     if (data.district) {
                       setTimeout(() => {
-                        const district = this.districts.find(d => d.name === data.district);
+                        const district = this.allDistricts.find(d => d.name === data.district && d.provinceId === province.id);
                         if (district) {
                           this.addressData.districtId = district.id;
                         }
@@ -391,9 +390,13 @@ export class AccountSummaryPageComponent
    */
   private loadDepartments(): void {
     this.accountApi.getDepartments().subscribe({
-      next: (departments) => {
+      next: async (departments) => {
         this.departments = departments;
         console.log('Departments loaded:', departments);
+        
+        // Cargar todas las provincias y distritos después de cargar los departamentos
+        await this.loadAllProvinces(departments);
+        await this.loadAllDistricts(departments);
       },
       error: (error) => {
         console.warn('Error loading departments:', error);
@@ -412,33 +415,66 @@ export class AccountSummaryPageComponent
     this.addressData.departmentId = departmentId;
     this.addressData.department = department?.name || '';
     
-    // Reset province and district when department changes
-    this.addressData.provinceId = '';
-    this.addressData.province = '';
-    this.addressData.districtId = '';
-    this.addressData.district = '';
-    this.provinces = [];
-    this.districts = [];
+    console.log('Department selected:', department?.name, 'ID:', departmentId);
+    console.log('All provinces count:', this.allProvinces.length);
     
-    // Load provinces for selected department
-    if (departmentId) {
-      this.loadProvinces(departmentId);
+    // Reset province and district when department changes
+    // Solo si la provincia seleccionada no pertenece al nuevo departamento
+    if (this.addressData.provinceId) {
+      const currentProvince = this.allProvinces.find(p => p.id === this.addressData.provinceId);
+      if (!currentProvince || String(currentProvince.departmentId) !== String(departmentId)) {
+        this.addressData.provinceId = '';
+        this.addressData.province = '';
+        this.addressData.districtId = '';
+        this.addressData.district = '';
+      }
+    } else {
+      // Si no hay provincia seleccionada, asegurarse de que estén vacíos
+      this.addressData.provinceId = '';
+      this.addressData.province = '';
+      this.addressData.districtId = '';
+      this.addressData.district = '';
+    }
+    
+    // Log filtered provinces for debugging
+    const filtered = this.filteredProvinces;
+    console.log('Filtered provinces for department', departmentId, ':', filtered.length);
+    if (filtered.length > 0) {
+      console.log('Sample provinces:', filtered.slice(0, 3).map(p => p.name));
+    } else {
+      console.warn('No provinces found for department. All provinces:', this.allProvinces.length);
+      if (this.allProvinces.length > 0) {
+        console.log('Sample province departmentIds:', this.allProvinces.slice(0, 5).map(p => ({ name: p.name, deptId: p.departmentId })));
+      }
     }
   }
 
   /**
-   * Loads provinces by department ID
+   * Loads all provinces
    */
-  private loadProvinces(departmentId: string): void {
-    this.accountApi.getProvincesByDepartment(departmentId).subscribe({
-      next: (provinces) => {
-        this.provinces = provinces;
-        console.log('Provinces loaded:', provinces);
-      },
-      error: (error) => {
-        console.warn('Error loading provinces:', error);
+  private async loadAllProvinces(departments: Department[]): Promise<void> {
+    try {
+      const provincePromises = departments.map(async dept => {
+        const provinces = await firstValueFrom(this.accountApi.getProvincesByDepartment(dept.id));
+        // Asegurarse de que cada provincia tenga el departmentId correcto
+        return provinces.map(province => ({
+          ...province,
+          departmentId: province.departmentId || dept.id
+        }));
+      });
+      
+      const provinceArrays = await Promise.all(provincePromises);
+      this.allProvinces = provinceArrays.flat();
+      console.log('All provinces loaded:', this.allProvinces.length);
+      if (this.allProvinces.length > 0) {
+        console.log('Sample province:', {
+          name: this.allProvinces[0].name,
+          departmentId: this.allProvinces[0].departmentId
+        });
       }
-    });
+    } catch (error) {
+      console.warn('Error loading all provinces:', error);
+    }
   }
 
   /**
@@ -447,35 +483,77 @@ export class AccountSummaryPageComponent
   onProvinceChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     const provinceId = target.value;
-    const province = this.provinces.find(p => p.id === provinceId);
+    const province = this.allProvinces.find(p => p.id === provinceId);
     
     this.addressData.provinceId = provinceId;
     this.addressData.province = province?.name || '';
     
-    // Reset district when province changes
-    this.addressData.districtId = '';
-    this.addressData.district = '';
-    this.districts = [];
+    console.log('Province selected:', province?.name, 'ID:', provinceId);
+    console.log('All districts count:', this.allDistricts.length);
     
-    // Load districts for selected province
-    if (provinceId) {
-      this.loadDistricts(provinceId);
+    // Si la provincia seleccionada no pertenece al departamento actual, actualizar el departamento
+    if (province && String(province.departmentId) !== String(this.addressData.departmentId)) {
+      const department = this.departments.find(d => d.id === province.departmentId);
+      if (department) {
+        this.addressData.departmentId = province.departmentId;
+        this.addressData.department = department.name;
+      }
+    }
+    
+    // Reset district when province changes
+    // Solo si el distrito seleccionado no pertenece a la nueva provincia
+    if (this.addressData.districtId) {
+      const currentDistrict = this.allDistricts.find(d => d.id === this.addressData.districtId);
+      if (!currentDistrict || String(currentDistrict.provinceId) !== String(provinceId)) {
+        this.addressData.districtId = '';
+        this.addressData.district = '';
+      }
+    }
+    
+    // Log filtered districts for debugging
+    const filtered = this.filteredDistricts;
+    console.log('Filtered districts for province', provinceId, ':', filtered.length);
+    if (filtered.length > 0) {
+      console.log('Sample districts:', filtered.slice(0, 3).map(d => d.name));
+    } else {
+      console.warn('No districts found for province. All districts:', this.allDistricts.length);
+      if (this.allDistricts.length > 0) {
+        console.log('Sample district provinceIds:', this.allDistricts.slice(0, 5).map(d => ({ name: d.name, provId: d.provinceId })));
+      }
     }
   }
 
   /**
-   * Loads districts by province ID
+   * Loads all districts
    */
-  private loadDistricts(provinceId: string): void {
-    this.accountApi.getDistrictsByProvince(provinceId).subscribe({
-      next: (districts) => {
-        this.districts = districts;
-        console.log('Districts loaded:', districts);
-      },
-      error: (error) => {
-        console.warn('Error loading districts:', error);
+  private async loadAllDistricts(departments: Department[]): Promise<void> {
+    try {
+      // Primero cargar todas las provincias si aún no están cargadas
+      if (this.allProvinces.length === 0) {
+        await this.loadAllProvinces(departments);
       }
-    });
+      
+      const districtPromises = this.allProvinces.map(async province => {
+        const districts = await firstValueFrom(this.accountApi.getDistrictsByProvince(province.id));
+        // Asegurarse de que cada distrito tenga el provinceId correcto
+        return districts.map(district => ({
+          ...district,
+          provinceId: district.provinceId || province.id
+        }));
+      });
+      
+      const districtArrays = await Promise.all(districtPromises);
+      this.allDistricts = districtArrays.flat();
+      console.log('All districts loaded:', this.allDistricts.length);
+      if (this.allDistricts.length > 0) {
+        console.log('Sample district:', {
+          name: this.allDistricts[0].name,
+          provinceId: this.allDistricts[0].provinceId
+        });
+      }
+    } catch (error) {
+      console.warn('Error loading all districts:', error);
+    }
   }
 
   /**
@@ -484,10 +562,76 @@ export class AccountSummaryPageComponent
   onDistrictChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     const districtId = target.value;
-    const district = this.districts.find(d => d.id === districtId);
+    const district = this.allDistricts.find(d => d.id === districtId);
     
     this.addressData.districtId = districtId;
     this.addressData.district = district?.name || '';
+    
+    // Si el distrito seleccionado no pertenece a la provincia actual, actualizar la provincia
+    if (district && district.provinceId !== this.addressData.provinceId) {
+      const province = this.allProvinces.find(p => p.id === district.provinceId);
+      if (province) {
+        this.addressData.provinceId = district.provinceId;
+        this.addressData.province = province.name;
+        
+        // Si la provincia no pertenece al departamento actual, actualizar el departamento
+        if (province.departmentId !== this.addressData.departmentId) {
+          const department = this.departments.find(d => d.id === province.departmentId);
+          if (department) {
+            this.addressData.departmentId = province.departmentId;
+            this.addressData.department = department.name;
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Gets filtered provinces based on selected department
+   */
+  get filteredProvinces(): Province[] {
+    if (!this.addressData.departmentId) {
+      return this.allProvinces;
+    }
+    // Asegurarse de que las provincias estén cargadas antes de filtrar
+    if (this.allProvinces.length === 0) {
+      return [];
+    }
+    const filtered = this.allProvinces.filter(p => {
+      // Comparación estricta de strings
+      return String(p.departmentId) === String(this.addressData.departmentId);
+    });
+    return filtered;
+  }
+
+  /**
+   * Gets filtered districts based on selected province
+   */
+  get filteredDistricts(): District[] {
+    // Asegurarse de que los distritos estén cargados antes de filtrar
+    if (this.allDistricts.length === 0) {
+      return [];
+    }
+    
+    if (!this.addressData.provinceId) {
+      // Si no hay provincia seleccionada pero hay departamento, mostrar distritos de provincias del departamento
+      if (this.addressData.departmentId) {
+        const departmentProvinces = this.allProvinces.filter(p => 
+          String(p.departmentId) === String(this.addressData.departmentId)
+        );
+        const departmentProvinceIds = departmentProvinces.map(p => p.id);
+        const filtered = this.allDistricts.filter(d => 
+          departmentProvinceIds.some(pid => String(d.provinceId) === String(pid))
+        );
+        return filtered;
+      }
+      return this.allDistricts;
+    }
+    
+    const filtered = this.allDistricts.filter(d => 
+      String(d.provinceId) === String(this.addressData.provinceId)
+    );
+    return filtered;
   }
 
   /**

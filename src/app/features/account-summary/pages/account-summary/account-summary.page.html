@@ -197,12 +197,11 @@
               class="account-summary-page__field__select" 
               [value]="addressData.provinceId"
               (change)="onProvinceChange($event)"
-              [disabled]="!addressData.departmentId || provinces.length === 0"
             >
               <option value="">
                 Elige provincia
               </option>
-              @for (province of provinces; track province.id) {
+              @for (province of filteredProvinces; track province.id) {
                 <option [value]="province.id" [selected]="addressData.provinceId === province.id">
                   {{ province.name }}
                 </option>
@@ -218,12 +217,11 @@
               class="account-summary-page__field__select" 
               [value]="addressData.districtId"
               (change)="onDistrictChange($event)"
-              [disabled]="!addressData.provinceId || districts.length === 0"
             >
               <option value="">
                 {{ getText('account.account-summary.address.districtPlaceholder') }}
               </option>
-              @for (district of districts; track district.id) {
+              @for (district of filteredDistricts; track district.id) {
                 <option [value]="district.id" [selected]="addressData.districtId === district.id">
                   {{ district.name }}
                 </option>
