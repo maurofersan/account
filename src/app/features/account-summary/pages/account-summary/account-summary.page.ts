@@ -18,7 +18,7 @@ import {
   DeclarationCheckboxComponent,
   ContractModalComponent,
 } from '../../../../shared/components';
-import { StdButtonDirective } from '../../../../shared/directives';
+import { StdButtonDirective, AlphanumericOnlyDirective } from '../../../../shared/directives';
 import {
   RedisCreateResponse,
   Department,
@@ -37,6 +37,7 @@ import {
     DeclarationCheckboxComponent,
     ContractModalComponent,
     StdButtonDirective,
+    AlphanumericOnlyDirective,
   ],
   templateUrl: './account-summary.page.html',
   styleUrl: './account-summary.page.scss',
@@ -319,7 +320,38 @@ export class AccountSummaryPageComponent
    */
   onRoadNameChange(event: any): void {
     try {
-      const value = event?.detail || event?.target?.value || event || '';
+      // Extraer el valor del evento - puede venir en diferentes formatos
+      let value = '';
+      
+      if (event) {
+        // Si event es un string, usarlo directamente
+        if (typeof event === 'string') {
+          value = event;
+        }
+        // Si event tiene detail (CustomEvent)
+        else if (event.detail !== undefined) {
+          // Si detail es un string, usarlo
+          if (typeof event.detail === 'string') {
+            value = event.detail;
+          }
+          // Si detail es un objeto, intentar extraer value
+          else if (event.detail && typeof event.detail === 'object') {
+            value = event.detail.value || event.detail.detail || '';
+          }
+        }
+        // Si event tiene target.value (InputEvent)
+        else if (event.target && event.target.value !== undefined) {
+          value = event.target.value;
+        }
+        // Si event es un objeto con value
+        else if (event.value !== undefined) {
+          value = event.value;
+        }
+      }
+      
+      // Asegurarse de que value sea un string
+      value = String(value || '');
+      
       this.addressData.roadName = value;
       this.validateRoadName();
     } catch (error) {

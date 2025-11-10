@@ -153,6 +153,7 @@
               [helperText]="roadNameError ? getText('account.account-summary.address.validation.minLength') : ''"
               (changeEvent)="onRoadNameChange($event)"
               (blurEvent)="validateRoadName()"
+              appAlphanumericOnly
             ></std-input>
           </div>
 
