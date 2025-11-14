@@ -275,22 +275,33 @@
     </div>
 
     <!-- Consent Section -->
-    <app-consent-checkbox
-      [checked]="consentAccepted"
-      [text]="getText('account.account-summary.consent.text')"
-      [highlight1]="getText('account.account-summary.consent.highlight')"
-      [suffix]="getText('account.account-summary.consent.suffix')"
-      [highlight2]="getText('account.account-summary.consent.highlight2')"
-      (change)="onConsentChange($event)"
-      (openContract)="onOpenContract()"
-    ></app-consent-checkbox>
+    <div class="account-summary-page__checkbox-container">
+      <std-checkbox 
+        class="account-summary-page__checkbox"
+        [checked]="consentAccepted"
+        (stdChange)="onConsentChange($event)"
+        (changeEvent)="onConsentChange($event)"
+      ></std-checkbox>
+      <span class="account-summary-page__checkbox_text">
+        {{ getText('account.account-summary.consent.text') }}
+        <span class="account-summary-page__checkbox_text_highlight" (click)="onOpenContract()">{{ getText('account.account-summary.consent.highlight') }}</span>
+        {{ getText('account.account-summary.consent.suffix') }}
+        <span class="account-summary-page__checkbox_text_highlight" (click)="onOpenContract()">{{ getText('account.account-summary.consent.highlight2') }}</span>
+      </span>
+    </div>
 
     <!-- Declaration Section -->
-    <app-declaration-checkbox
-      [checked]="declarationAccepted"
-      [text]="getText('account.account-summary.declaration.text')"
-      (change)="onDeclarationChange($event)"
-    ></app-declaration-checkbox>
+    <div class="account-summary-page__checkbox-container">
+      <std-checkbox 
+        class="account-summary-page__checkbox"
+        [checked]="declarationAccepted"
+        (stdChange)="onDeclarationChange($event)"
+        (changeEvent)="onDeclarationChange($event)"
+      ></std-checkbox>
+      <span class="account-summary-page__checkbox_text">
+        {{ getText('account.account-summary.declaration.text') }}
+      </span>
+    </div>
 
     <!-- Actions -->
     <div class="account-summary-page__actions">

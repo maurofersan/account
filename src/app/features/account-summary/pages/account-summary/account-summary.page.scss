@@ -1,7 +1,6 @@
 .account-summary-page {
   min-height: 100vh;
   background-color: #f8f9fa;
-  padding: 20px;
 
   &__container {
     max-width: 400px;
@@ -257,5 +256,38 @@
     left: 20px;
     right: 20px;
     z-index: 1000;
+  }
+
+  &__checkbox-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  &__checkbox {
+    flex-shrink: 0;
+    margin-top: 2px; // Alinear con la primera línea del texto
+  }
+
+  &__checkbox_text {
+    flex: 1;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #212529;
+    font-weight: 400;
+
+    &_highlight {
+      color: #007bff;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+
+      &:hover {
+        color: #0056b3;
+      }
+    }
   }
 }

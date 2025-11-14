@@ -14,8 +14,6 @@ import { AccountApiService } from '../../../../core/services/account-api.service
 import {
   AccountNavigationComponent,
   AccountTitleSectionComponent,
-  ConsentCheckboxComponent,
-  DeclarationCheckboxComponent,
   ContractModalComponent,
 } from '../../../../shared/components';
 import { StdButtonDirective, AlphanumericOnlyDirective } from '../../../../shared/directives';
@@ -33,8 +31,6 @@ import {
     FormsModule,
     AccountNavigationComponent,
     AccountTitleSectionComponent,
-    ConsentCheckboxComponent,
-    DeclarationCheckboxComponent,
     ContractModalComponent,
     StdButtonDirective,
     AlphanumericOnlyDirective,
@@ -293,8 +289,41 @@ export class AccountSummaryPageComponent
   /**
    * Handles consent change
    */
-  onConsentChange(checked: boolean): void {
-    this.consentAccepted = checked;
+  onConsentChange(event: any): void {
+    try {
+      // Extraer el valor del evento - puede venir en diferentes formatos
+      let checked = false;
+      
+      if (event !== undefined && event !== null) {
+        // Si event es un boolean, usarlo directamente
+        if (typeof event === 'boolean') {
+          checked = event;
+        }
+        // Si event tiene detail (CustomEvent)
+        else if (event.detail !== undefined) {
+          // Si detail es un boolean, usarlo
+          if (typeof event.detail === 'boolean') {
+            checked = event.detail;
+          }
+          // Si detail es un objeto, intentar extraer checked
+          else if (event.detail && typeof event.detail === 'object') {
+            checked = event.detail.checked !== undefined ? event.detail.checked : false;
+          }
+        }
+        // Si event tiene target.checked (InputEvent)
+        else if (event.target && event.target.checked !== undefined) {
+          checked = event.target.checked;
+        }
+        // Si event es un objeto con checked
+        else if (event.checked !== undefined) {
+          checked = event.checked;
+        }
+      }
+      
+      this.consentAccepted = checked;
+    } catch (error) {
+      console.warn('Error handling consent change:', error);
+    }
   }
 
   /**
@@ -391,8 +420,41 @@ export class AccountSummaryPageComponent
   /**
    * Handles declaration checkbox change
    */
-  onDeclarationChange(accepted: boolean): void {
-    this.declarationAccepted = accepted;
+  onDeclarationChange(event: any): void {
+    try {
+      // Extraer el valor del evento - puede venir en diferentes formatos
+      let accepted = false;
+      
+      if (event !== undefined && event !== null) {
+        // Si event es un boolean, usarlo directamente
+        if (typeof event === 'boolean') {
+          accepted = event;
+        }
+        // Si event tiene detail (CustomEvent)
+        else if (event.detail !== undefined) {
+          // Si detail es un boolean, usarlo
+          if (typeof event.detail === 'boolean') {
+            accepted = event.detail;
+          }
+          // Si detail es un objeto, intentar extraer checked
+          else if (event.detail && typeof event.detail === 'object') {
+            accepted = event.detail.checked !== undefined ? event.detail.checked : false;
+          }
+        }
+        // Si event tiene target.checked (InputEvent)
+        else if (event.target && event.target.checked !== undefined) {
+          accepted = event.target.checked;
+        }
+        // Si event es un objeto con checked
+        else if (event.checked !== undefined) {
+          accepted = event.checked;
+        }
+      }
+      
+      this.declarationAccepted = accepted;
+    } catch (error) {
+      console.warn('Error handling declaration change:', error);
+    }
   }
 
   /**
