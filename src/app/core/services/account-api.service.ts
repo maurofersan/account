@@ -11,6 +11,8 @@ import {
   Department,
   Province,
   District,
+  ApiResponse,
+  DescribeCatalogItem,
 } from '../../shared/interfaces/account.interfaces';
 
 @Injectable({
@@ -97,21 +99,28 @@ export class AccountApiService {
   /**
    * Gets all departments
    */
-  getDepartments(): Observable<Department[]> {
-    return this.http.get<Department[]>('/departments');
+  getDepartments(): Observable<ApiResponse<Department[]>> {
+    return this.http.get<ApiResponse<Department[]>>('/departments');
   }
 
   /**
    * Gets provinces by department ID
    */
-  getProvincesByDepartment(departmentId: string): Observable<Province[]> {
-    return this.http.get<Province[]>(`/departments/${departmentId}/provinces`);
+  getProvincesByDepartment(departmentId: string): Observable<ApiResponse<Province[]>> {
+    return this.http.get<ApiResponse<Province[]>>(`/departments/${departmentId}/provinces`);
   }
 
   /**
    * Gets districts by province ID
    */
-  getDistrictsByProvince(provinceId: string): Observable<District[]> {
-    return this.http.get<District[]>(`/provinces/${provinceId}/districts`);
+  getDistrictsByProvince(provinceId: string): Observable<ApiResponse<District[]>> {
+    return this.http.get<ApiResponse<District[]>>(`/provinces/${provinceId}/districts`);
+  }
+
+  /**
+   * Gets catalog by name using the generic endpoint
+   */
+  getCatalog(catalogName: string): Observable<ApiResponse<DescribeCatalogItem[]>> {
+    return this.http.get<ApiResponse<DescribeCatalogItem[]>>(`/catalog/describe-catalog/${catalogName}`);
   }
 }

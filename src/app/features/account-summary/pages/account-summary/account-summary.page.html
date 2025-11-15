@@ -134,12 +134,21 @@
             <label class="account-summary-page__field__label">
               {{ getText('account.account-summary.address.roadType') }}
             </label>
-            <select class="account-summary-page__field__select">
+            <select 
+              class="account-summary-page__field__select"
+              [value]="addressData.roadTypeId"
+              (change)="onRoadTypeChange($event)"
+            >
               <option value="">
                 {{
                 getText('account.account-summary.address.roadTypePlaceholder')
                 }}
               </option>
+              @for (streetType of streetTypes; track streetType.describeCatalogId) {
+                <option [value]="streetType.describeCatalogId" [selected]="addressData.roadTypeId === streetType.describeCatalogId">
+                  {{ streetType.describeCatalogCode }}
+                </option>
+              }
             </select>
           </div>
 
@@ -248,12 +257,21 @@
               <label class="account-summary-page__field__label">
                 {{ getText('account.account-summary.personalData.maritalStatus') }}
               </label>
-              <select class="account-summary-page__field__select">
+              <select 
+                class="account-summary-page__field__select"
+                [value]="personalData.maritalStatusId"
+                (change)="onMaritalStatusChange($event)"
+              >
                 <option value="">
                   {{
                   getText('account.account-summary.personalData.selectPlaceholder')
                   }}
                 </option>
+                @for (maritalStatus of maritalStatuses; track maritalStatus.describeCatalogId) {
+                  <option [value]="maritalStatus.describeCatalogId" [selected]="personalData.maritalStatusId === maritalStatus.describeCatalogId">
+                    {{ maritalStatus.describeCatalogCode }}
+                  </option>
+                }
               </select>
             </div>
 
@@ -261,12 +279,21 @@
               <label class="account-summary-page__field__label">
                 {{ getText('account.account-summary.personalData.gender') }}
               </label>
-              <select class="account-summary-page__field__select">
+              <select 
+                class="account-summary-page__field__select"
+                [value]="personalData.genderId"
+                (change)="onGenderChange($event)"
+              >
                 <option value="">
                   {{
                   getText('account.account-summary.personalData.selectPlaceholder')
                   }}
                 </option>
+                @for (gender of genders; track gender.describeCatalogId) {
+                  <option [value]="gender.describeCatalogId" [selected]="personalData.genderId === gender.describeCatalogId">
+                    {{ gender.describeCatalogCode }}
+                  </option>
+                }
               </select>
             </div>
           </div>

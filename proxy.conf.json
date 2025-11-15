@@ -1,24 +1,30 @@
 {
   "/redis/*": {
-    "target": "http://localhost:3000",
+    "target": "http://localhost:3007",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/departments": {
-    "target": "http://localhost:3000",
+    "target": "http://localhost:3007",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/departments/*": {
-    "target": "http://localhost:3000",
+    "target": "http://localhost:3007",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/provinces/*": {
-    "target": "http://localhost:3000",
+    "target": "http://localhost:3007",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/catalog/*": {
+    "target": "http://localhost:3007",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

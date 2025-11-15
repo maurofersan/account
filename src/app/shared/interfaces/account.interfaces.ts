@@ -156,3 +156,16 @@ export interface District {
   name: string;
   provinceId: string;
 }
+
+export interface ApiResponse<T> {
+  success: boolean;
+  status: number;
+  message: string;
+  data: T;
+}
+
+export interface DescribeCatalogItem {
+  describeCatalogId: string;
+  describeCatalogCode: string;
+  describeCatalogDescription: string;
+}

@@ -22,6 +22,7 @@ import {
   Department,
   Province,
   District,
+  DescribeCatalogItem,
 } from '../../../../shared/interfaces/account.interfaces';
 
 @Component({
@@ -48,11 +49,14 @@ export class AccountSummaryPageComponent
     dni: '87654321',
     birthDate: '07/08/1981',
     maritalStatus: '',
+    maritalStatusId: '',
     gender: '',
+    genderId: '',
   };
 
   addressData = {
     roadType: '',
+    roadTypeId: '',
     roadName: '',
     roadNumber: '',
     department: '',
@@ -67,6 +71,11 @@ export class AccountSummaryPageComponent
   departments: Department[] = [];
   allProvinces: Province[] = []; // Todas las provincias cargadas
   allDistricts: District[] = []; // Todos los distritos cargados
+
+  // Catalog data
+  streetTypes: DescribeCatalogItem[] = [];
+  maritalStatuses: DescribeCatalogItem[] = [];
+  genders: DescribeCatalogItem[] = [];
 
   // Validation states
   roadNameError = false;
@@ -99,19 +108,22 @@ export class AccountSummaryPageComponent
     });
     this.loadAccountData();
     this.loadDepartments();
+    this.loadAllStreetTypes();
+    this.loadAllMaritalStatus();
+    this.loadAllGender();
   }
 
   /**
    * Loads account and user data from the fake backend
    */
   private loadAccountData(): void {
-    // Obtener productId y documentNumber
+    // Obtener documentType y documentNumber
     // Puedes obtenerlos de localStorage, route params, o usar valores por defecto
-    const productId = this.getProductId();
+    const documentType = this.getDocumentType();
     const documentNumber = this.getDocumentNumber();
 
-    if (productId && documentNumber) {
-      this.accountApi.getAccountAndUserData(productId, documentNumber).subscribe({
+    if (documentType && documentNumber) {
+      this.accountApi.getAccountAndUserData(documentType, documentNumber).subscribe({
         next: (data: RedisCreateResponse) => {
           console.log('Datos obtenidos del backend:', data);
           
@@ -121,8 +133,31 @@ export class AccountSummaryPageComponent
             dni: data.documentNumber || this.personalData.dni,
             birthDate: this.formatBirthDate(data.birthDate) || this.personalData.birthDate,
             maritalStatus: data.maritalStatus || '',
+            maritalStatusId: '',
             gender: data.gender || '',
+            genderId: '',
           };
+          
+          // Si los catálogos ya están cargados, mapear los IDs
+          if (data.maritalStatus && this.maritalStatuses.length > 0) {
+            const status = this.maritalStatuses.find(s => 
+              s.describeCatalogCode === data.maritalStatus || 
+              s.describeCatalogDescription === data.maritalStatus
+            );
+            if (status) {
+              this.personalData.maritalStatusId = status.describeCatalogId;
+            }
+          }
+          
+          if (data.gender && this.genders.length > 0) {
+            const gender = this.genders.find(g => 
+              g.describeCatalogCode === data.gender || 
+              g.describeCatalogDescription === data.gender
+            );
+            if (gender) {
+              this.personalData.genderId = gender.describeCatalogId;
+            }
+          }
 
           // Mapear datos de contacto
           this.contactData = {
@@ -182,17 +217,30 @@ export class AccountSummaryPageComponent
   }
 
   /**
-   * Gets productId from localStorage or uses default
+   * Gets documentType from localStorage or uses default
    */
-  private getProductId(): string {
+  private getDocumentType(): string {
     // Intentar obtener desde localStorage
-    const productId = localStorage.getItem('productId');
-    if (productId) {
-      return productId;
+    const documentType = localStorage.getItem('documentType');
+    if (documentType) {
+      return documentType;
     }
     
-    // Valor por defecto del ejemplo
-    return '0ed651ca-908b-4f83-9626-d6b4740d97e7';
+    // Intentar obtener desde onboardingData
+    try {
+      const onboardingData = localStorage.getItem('onboardingData');
+      if (onboardingData) {
+        const data = JSON.parse(onboardingData);
+        if (data.documentType) {
+          return data.documentType;
+        }
+      }
+    } catch (error) {
+      console.error('Error reading documentType from onboardingData:', error);
+    }
+    
+    // Valor por defecto (DNI es el más común)
+    return 'DNI';
   }
 
   /**
@@ -393,7 +441,38 @@ export class AccountSummaryPageComponent
    */
   onRoadNumberChange(event: any): void {
     try {
-      const value = event?.detail || event?.target?.value || event || '';
+      // Extraer el valor del evento - puede venir en diferentes formatos
+      let value = '';
+      
+      if (event) {
+        // Si event es un string, usarlo directamente
+        if (typeof event === 'string') {
+          value = event;
+        }
+        // Si event tiene detail (CustomEvent)
+        else if (event.detail !== undefined) {
+          // Si detail es un string, usarlo
+          if (typeof event.detail === 'string') {
+            value = event.detail;
+          }
+          // Si detail es un objeto, intentar extraer value
+          else if (event.detail && typeof event.detail === 'object') {
+            value = event.detail.value || event.detail.detail || '';
+          }
+        }
+        // Si event tiene target.value (InputEvent)
+        else if (event.target && event.target.value !== undefined) {
+          value = event.target.value;
+        }
+        // Si event es un objeto con value
+        else if (event.value !== undefined) {
+          value = event.value;
+        }
+      }
+      
+      // Asegurarse de que value sea un string
+      value = String(value || '');
+      
       this.addressData.roadNumber = value;
       this.validateRoadNumber();
     } catch (error) {
@@ -484,13 +563,13 @@ export class AccountSummaryPageComponent
    */
   private loadDepartments(): void {
     this.accountApi.getDepartments().subscribe({
-      next: async (departments) => {
-        this.departments = departments;
-        console.log('Departments loaded:', departments);
+      next: async (response) => {
+        this.departments = response.data;
+        console.log('Departments loaded:', this.departments);
         
         // Cargar todas las provincias y distritos después de cargar los departamentos
-        await this.loadAllProvinces(departments);
-        await this.loadAllDistricts(departments);
+        await this.loadAllProvinces(this.departments);
+        await this.loadAllDistricts(this.departments);
       },
       error: (error) => {
         console.warn('Error loading departments:', error);
@@ -548,15 +627,22 @@ export class AccountSummaryPageComponent
    */
   private async loadAllProvinces(departments: Department[]): Promise<void> {
     try {
-      const provincePromises = departments.map(async dept => {
-        const provinces = await firstValueFrom(this.accountApi.getProvincesByDepartment(dept.id));
-        // Asegurarse de que cada provincia tenga el departmentId correcto
-        return provinces.map(province => ({
-          ...province,
-          departmentId: province.departmentId || dept.id
-        }));
+      const provincePromises = departments.map(async (dept) => {
+        try {
+          const response = await firstValueFrom(
+            this.accountApi.getProvincesByDepartment(dept.id)
+          );
+          // Asegurarse de que cada provincia tenga el departmentId correcto
+          return response.data.map((province) => ({
+            ...province,
+            departmentId: province.departmentId || dept.id,
+          }));
+        } catch (error) {
+          console.error(`Error loading provinces for department ${dept.id}:`, error);
+          return [];
+        }
       });
-      
+
       const provinceArrays = await Promise.all(provincePromises);
       this.allProvinces = provinceArrays.flat();
       console.log('All provinces loaded:', this.allProvinces.length);
@@ -627,13 +713,20 @@ export class AccountSummaryPageComponent
         await this.loadAllProvinces(departments);
       }
       
-      const districtPromises = this.allProvinces.map(async province => {
-        const districts = await firstValueFrom(this.accountApi.getDistrictsByProvince(province.id));
-        // Asegurarse de que cada distrito tenga el provinceId correcto
-        return districts.map(district => ({
-          ...district,
-          provinceId: district.provinceId || province.id
-        }));
+      const districtPromises = this.allProvinces.map(async (province) => {
+        try {
+          const response = await firstValueFrom(
+            this.accountApi.getDistrictsByProvince(province.id)
+          );
+          // Asegurarse de que cada distrito tenga el provinceId correcto
+          return response.data.map((district) => ({
+            ...district,
+            provinceId: district.provinceId || province.id,
+          }));
+        } catch (error) {
+          console.error(`Error loading districts for province ${province.id}:`, error);
+          return [];
+        }
       });
       
       const districtArrays = await Promise.all(districtPromises);
@@ -648,6 +741,152 @@ export class AccountSummaryPageComponent
     } catch (error) {
       console.warn('Error loading all districts:', error);
     }
+  }
+
+  /**
+   * Loads all street types
+   */
+  private async loadAllStreetTypes(): Promise<void> {
+    try {
+      console.log('Loading street types from: /catalog/describe-catalog/road_type');
+      const response = await firstValueFrom(
+        this.accountApi.getCatalog('road_type')
+      );
+      
+      this.streetTypes = response.data.map((item) => ({
+        ...item,
+      }));
+      
+      console.log('Street types loaded:', this.streetTypes.length);
+      if (this.streetTypes.length > 0) {
+        console.log('Sample street type:', {
+          id: this.streetTypes[0].describeCatalogId,
+          code: this.streetTypes[0].describeCatalogCode,
+          description: this.streetTypes[0].describeCatalogDescription
+        });
+      }
+    } catch (error) {
+      console.error('Error loading street types from /catalog/describe-catalog/road_type:', error);
+    }
+  }
+
+  /**
+   * Loads all marital status
+   */
+  private async loadAllMaritalStatus(): Promise<void> {
+    try {
+      const response = await firstValueFrom(
+        this.accountApi.getCatalog('marital_status')
+      );
+      
+      this.maritalStatuses = response.data.map((item) => ({
+        ...item,
+      }));
+      
+      console.log('Marital statuses loaded:', this.maritalStatuses.length);
+      if (this.maritalStatuses.length > 0) {
+        console.log('Sample marital status:', {
+          id: this.maritalStatuses[0].describeCatalogId,
+          code: this.maritalStatuses[0].describeCatalogCode,
+          description: this.maritalStatuses[0].describeCatalogDescription
+        });
+      }
+      
+      // Si hay datos cargados previamente, intentar mapear
+      this.mapPersonalDataIfNeeded();
+    } catch (error) {
+      console.error('Error loading marital status:', error);
+    }
+  }
+
+  /**
+   * Loads all gender
+   */
+  private async loadAllGender(): Promise<void> {
+    try {
+      console.log('Loading gender from: /catalog/describe-catalog/gender');
+      const response = await firstValueFrom(
+        this.accountApi.getCatalog('gender')
+      );
+      
+      this.genders = response.data.map((item) => ({
+        ...item,
+      }));
+      
+      console.log('Genders loaded:', this.genders.length);
+      if (this.genders.length > 0) {
+        console.log('Sample gender:', {
+          id: this.genders[0].describeCatalogId,
+          code: this.genders[0].describeCatalogCode,
+          description: this.genders[0].describeCatalogDescription
+        });
+      }
+      
+      // Si hay datos cargados previamente, intentar mapear
+      this.mapPersonalDataIfNeeded();
+    } catch (error) {
+      console.error('Error loading gender from /catalog/describe-catalog/gender:', error);
+    }
+  }
+
+  /**
+   * Maps personal data IDs if catalogs are loaded
+   */
+  private mapPersonalDataIfNeeded(): void {
+    if (this.maritalStatuses.length > 0 && this.personalData.maritalStatus && !this.personalData.maritalStatusId) {
+      const status = this.maritalStatuses.find(s => 
+        s.describeCatalogCode === this.personalData.maritalStatus || 
+        s.describeCatalogDescription === this.personalData.maritalStatus
+      );
+      if (status) {
+        this.personalData.maritalStatusId = status.describeCatalogId;
+      }
+    }
+    if (this.genders.length > 0 && this.personalData.gender && !this.personalData.genderId) {
+      const gender = this.genders.find(g => 
+        g.describeCatalogCode === this.personalData.gender || 
+        g.describeCatalogDescription === this.personalData.gender
+      );
+      if (gender) {
+        this.personalData.genderId = gender.describeCatalogId;
+      }
+    }
+  }
+
+  /**
+   * Handles marital status change
+   */
+  onMaritalStatusChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const maritalStatusId = target.value;
+    const maritalStatus = this.maritalStatuses.find(s => s.describeCatalogId === maritalStatusId);
+    
+    this.personalData.maritalStatusId = maritalStatusId;
+    this.personalData.maritalStatus = maritalStatus?.describeCatalogCode || '';
+  }
+
+  /**
+   * Handles gender change
+   */
+  onGenderChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const genderId = target.value;
+    const gender = this.genders.find(g => g.describeCatalogId === genderId);
+    
+    this.personalData.genderId = genderId;
+    this.personalData.gender = gender?.describeCatalogCode || '';
+  }
+
+  /**
+   * Handles road type change
+   */
+  onRoadTypeChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const roadTypeId = target.value;
+    const roadType = this.streetTypes.find(t => t.describeCatalogId === roadTypeId);
+    
+    this.addressData.roadTypeId = roadTypeId;
+    this.addressData.roadType = roadType?.describeCatalogCode || '';
   }
 
   /**
@@ -733,11 +972,21 @@ export class AccountSummaryPageComponent
    */
   get canContinue(): boolean {
     try {
-      return (
+      return !!(
         this.consentAccepted &&
         this.declarationAccepted &&
         !this.roadNameError &&
-        !this.roadNumberError
+        !this.roadNumberError &&
+        this.addressData.roadTypeId &&
+        this.addressData.roadName &&
+        this.addressData.roadName.length >= 2 &&
+        this.addressData.roadNumber &&
+        this.addressData.roadNumber.length >= 2 &&
+        this.addressData.departmentId &&
+        this.addressData.provinceId &&
+        this.addressData.districtId &&
+        this.personalData.maritalStatusId &&
+        this.personalData.genderId
       );
     } catch (error) {
       console.warn('Error checking canContinue:', error);
