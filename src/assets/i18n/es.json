@@ -42,7 +42,7 @@
         "dni": "DNI",
         "birthDate": "Fecha de nacimiento",
         "maritalStatus": "Estado civil",
-        "gender": "Género (según tu DNI)",
+        "gender": "Género",
         "selectPlaceholder": "Selecciona"
       },
       "address": {

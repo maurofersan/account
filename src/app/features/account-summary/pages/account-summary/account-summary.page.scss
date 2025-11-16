@@ -97,6 +97,18 @@
 
     .account-summary-page__field {
       flex: 1;
+      min-width: 0; // Permite que flex funcione correctamente con contenido largo
+      
+      &__label {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+      
+      &__select {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
     }
   }
 
